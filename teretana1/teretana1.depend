@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1588203738 source:c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\dinstring.cpp
+	"dinstring.hpp"
+
+1588203738 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\dinstring.hpp
+	<iostream>
+
