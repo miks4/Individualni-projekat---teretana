@@ -13,7 +13,9 @@ enum TIP_SPRAVE { RUKE = 1, GRUDI, NOGE, LEDJA, STOMAK, RAME };
 enum STANJE_SPRAVE { ODLICNO = 1, LOSE, NA_POPRAVCI };
 enum VRSTA_FITNES_OPREME { STRUNJACA = 1, LOPTA, DZAK, GUMA };
 enum VRSTA_TRENINGA { FITNES = 1, BODYWEIGHT, BODYBUILDING };
-enum VRSTA_SUPLEMENATA{PROTEIN = 1,KREATIN,AMINOKISELINA};
+enum VRSTA_SUPLEMENATA { PROTEIN = 1, KREATIN, AMINOKISELINA };
+enum VRSTA_CLANA { OBICAN = 1, VIP };
+enum ZAPOSLENI { TRENER = 1,CISTACICA,POMOCNIK };
 
 
 class RadnoVreme {
@@ -837,6 +839,10 @@ public:
     void set_kacketi(const int k) { kacketi = k; }
     void set_kalendari(const int kal) { kalendari = kal; }
     void set_olovke(const int o) { olovke = o; }
+    int brojReklamnogMaterijala(){
+       int b = majice + trenerke + kacketi + olovke + kalendari;
+       return b;
+    }
 };
 class PlanTreninga {
 private:
@@ -893,18 +899,22 @@ class Suplementi {
 private:
     int cena;
     VRSTA_SUPLEMENATA suplement;
+    int broj;
 public:
     Suplementi() {
         cena = 150;
         suplement = PROTEIN;
+        broj = 1000;
     }
-    Suplementi(int c, VRSTA_SUPLEMENATA v) {
+    Suplementi(int c, VRSTA_SUPLEMENATA v,int b) {
         cena = c;
         suplement = v;
+        broj = b;
     }
     Suplementi(const Suplementi& s) {
         cena = s.cena;
         suplement = s.suplement;
+        broj = s.broj;
     }
     int get_cena()const {
         return cena;
@@ -912,11 +922,17 @@ public:
     VRSTA_SUPLEMENATA get_suplement()const {
         return suplement;
     }
+    int get_broj()const{
+        return broj;
+    }
     void set_cena(const int c) {
         cena = c;
     }
     void set_suplement(const VRSTA_SUPLEMENATA v) {
         suplement = v;
+    }
+    void set_broj(const int b){
+        broj = b;
     }
 };
 class Clanarina {
@@ -959,6 +975,236 @@ public:
         trajanje = t;
     }
 };
+class Kasa{
+private:
+    int profit;
+    int trosak;
+    ReklamniMaterijal reklamniM;
+    PlanTreninga planT;
+    Suplementi suplement;
+    Clanarina clanarina;
+public:
+    Kasa() : reklamniM(),planT(),suplement(),clanarina(){
+        profit = 100000;
+        trosak = 30000;
+    }
+    Kasa(int m,int t,int k,int kal,int ol,int kval,int c,int r,VRSTA_TRENINGA vt,int ce,VRSTA_SUPLEMENATA vs,int g,int cen,DinString dd,int traj,int p,int tr) : reklamniM(m,t,k,kal,ol),planT(kval,c,t,vt),suplement(ce,vs,g),clanarina(cen,dd,traj){
+        profit = p;
+        trosak = tr;
+    }
+    Kasa(const Kasa &k) : reklamniM(k.reklamniM),planT(k.planT),suplement(k.suplement),clanarina(k.clanarina){
+        profit = k.profit;
+        trosak = k.trosak;
+    }
+    int get_profit()const{
+        return profit;
+    }
+    int get_trosak()const{
+        return trosak;
+    }
+    int get_cenaClanarinaKasa()const{
+        return clanarina.get_cena();
+    }
+    DinString get_datumUplateKasa()const{
+        return clanarina.get_datumUplate();
+    }
+    int get_trajanjeClanarineKasa()const{
+        return clanarina.get_trajanje();
+    }
+    int get_cenaTreningaKasa()const{
+        return planT.get_cena();
+    }
+    int get_kvalitetTreningaKasa()const{
+        return planT.get_kvalitet();
+    }
+    int get_rokTreningaKasa()const{
+        return planT.get_rok();
+    }
+    VRSTA_TRENINGA get_vrstaTreningaKasa()const{
+        return planT.get_vrstaTreninga();
+    }
+    void set_profit(const int p){
+        profit = p;
+    }
+    void set_trosak(const int t){
+        trosak = t;
+    }
+    void set_cenaClanarineKasa(const int c){
+        clanarina.set_cena(c);
+    }
+    void set_datumUplateKasa(const DinString d){
+        clanarina.set_datumUplate(d);
+    }
+    void set_trajanjeClanarineKasa(const int t){
+        clanarina.set_trajanje(t);
+    }
+    void set_kvalitetTreningaKasa(const int k){
+        planT.set_kvalitet(k);
+    }
+    void set_cenaTreningaKasa(const int c){
+        planT.set_cena(c);
+    }
+    void set_rokTreningaKasa(const int r){
+        planT.set_rok(r);
+    }
+    void set_vrstaTreningaKasa(const VRSTA_TRENINGA v){
+        planT.set_vrstaTreninga(v);
+    }
+    bool prodajMajice(int brMajci){
+        if(reklamniM.get_majice() >= brMajci){
+            reklamniM.set_majice(reklamniM.get_majice() - brMajci);
+            return true;
+        }
+        return false;
+    }
+    bool prodajTrenerke(int brTrenerki){
+        if(reklamniM.get_trenerke() >= brTrenerki){
+            reklamniM.set_trenerke(reklamniM.get_trenerke() - brTrenerki);
+            return true;
+        }
+        return false;
+    }
+    bool prodajKalendare(int BrKalendara){
+        if(reklamniM.get_kalendari() >= BrKalendara){
+            reklamniM.set_kalendari(reklamniM.get_kalendari() - BrKalendara);
+            return true;
+        }
+        return false;
+    }
+    bool prodajKackete(int brKacketa){
+        if(reklamniM.get_kacketi() >= brKacketa){
+            reklamniM.set_kacketi(reklamniM.get_kacketi() - brKacketa);
+            return true;
+        }
+        return false;
+    }
+    bool prodajOlovke(int BrOlovaka){
+        if(reklamniM.get_olovke() >= BrOlovaka){
+            reklamniM.set_olovke(reklamniM.get_olovke() - BrOlovaka);
+            return true;
+        }
+        return false;
+    }
+
+    bool prodajSuplemente(VRSTA_SUPLEMENATA zeljeniProizvod){
+        if(suplement.get_broj() > 0 && suplement.get_suplement() == zeljeniProizvod){
+            suplement.set_broj(suplement.get_broj() - 1);
+            return true;
+        }
+        return false;
+    }
+};
+
+class Osoba{
+private:
+    DinString ime,prezime,datumRodjenja,brTelefona;
+public:
+    Osoba(){
+        ime = "luka";
+        prezime = "obradovic";
+        datumRodjenja = "24.5.2001.";
+        brTelefona = "0605009000";
+    }
+    Osoba(DinString i,DinString p,DinString dr,DinString b){
+        ime = i;
+        prezime = p;
+        datumRodjenja = dr;
+        brTelefona = b;
+    }
+    Osoba(const Osoba &o){
+        ime = o.ime;
+        prezime = o.prezime;
+        datumRodjenja = o.datumRodjenja;
+        brTelefona = o.brTelefona;
+    }
+    DinString get_ime()const{
+        return ime;
+    }
+    DinString get_prezime()const{
+        return prezime;
+    }
+    DinString get_datumRodjenja()const{
+        return datumRodjenja;
+    }
+    DinString get_brTelefona()const{
+        return brTelefona;
+    }
+    void set_ime(const DinString i){
+        ime = i;
+    }
+    void set_prezime(const DinString p){
+        prezime = p;
+    }
+    void set_datumRodjenja(const DinString dr){
+        datumRodjenja = dr;
+    }
+    void set_brTelefona(const DinString b){
+        brTelefona = b;
+    }
+
+};
+class Clan : public Osoba{
+protected:
+    int kodKartice;
+    VRSTA_CLANA clan;
+public:
+    Clan() : Osoba(){
+        kodKartice = 123;
+        clan = OBICAN;
+    }
+    Clan(DinString i,DinString p,DinString dr,DinString b,int k, VRSTA_CLANA c) : Osoba(i,p,dr,b) {
+        kodKartice = k;
+        clan = c;
+    }
+    Clan(const Clan& c) : Osoba((Osoba)c) {
+        kodKartice = c.kodKartice;
+        clan = c.clan;
+    }
+    int get_kodKartice()const {
+        return kodKartice;
+    }
+    VRSTA_CLANA get_vrstaClana()const {
+        return clan;
+    }
+    void set_kodKartice(const int k) {
+        kodKartice = k;
+    }
+    void set_vrstaClana(const VRSTA_CLANA c) {
+        clan = c;
+    }
+
+};
+class Zaposleni : public Osoba{
+protected:
+    int brZaposleni;
+    ZAPOSLENI zaposleni;
+public:
+    Zaposleni() : Osoba() {
+        brZaposleni = 5;
+        zaposleni = TRENER;
+    }
+    Zaposleni(DinString i,DinString p,DinString dr,DinString br,int b, ZAPOSLENI z) : Osoba(i,p,dr,br) {
+        brZaposleni = b;
+        zaposleni = z;
+    }
+    Zaposleni(const Zaposleni& z) : Osoba((Osoba)z) {
+        brZaposleni = z.brZaposleni;
+        zaposleni = z.zaposleni;
+    }
+    int get_brZaposlenih()const {
+        return brZaposleni;
+    }
+    ZAPOSLENI get_zaposleni()const {
+        return zaposleni;
+    }
+    void set_brZaposlenih(const int z) {
+        brZaposleni = z;
+    }
+    void set_zaposleni(const ZAPOSLENI s) {
+        zaposleni = s;
+    }
+};
+
 
 int main()
 {
@@ -1046,13 +1292,28 @@ int main()
     PlanTreninga pt2(pt1);
 
     Suplementi sup();
-    Suplementi sup1(150, PROTEIN);
+    Suplementi sup1(150, PROTEIN,1000);
     Suplementi sup2(sup1);
 
-    Clanarina cl();
+    Clanarina c4();
     Clanarina c2(2000, "1.4.2020", 30);
     Clanarina c3(c2);
 
+    Osoba os();
+    Osoba os1("luka","obradovic","12.12.2001.","0605009000");
+    Osoba os2(os1);
+
+    Clan cl2();
+    Clan cl3("luka","obradovic","12.12.2001.","0605009000",123, OBICAN);
+    Clan cl4(cl3);
+
+    Zaposleni z();
+    Zaposleni z1("luka","obradovic","12.12.2001.","0605009000",5,TRENER);
+    Zaposleni z2(z1);
+
+    Kasa ka();
+    Kasa ka1(50,50,20,25,80,90,20000,40,FITNES,150,PROTEIN,1000,2000,"3.3.2020",30,100000,30000);
+    Kasa ka2(ka1);
 
 }
 
