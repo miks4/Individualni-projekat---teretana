@@ -1,4 +1,27 @@
 #include <iostream>
+#include "dinstring.hpp"
+#include "list.hpp"
+#include "RadnoVreme.hpp"
+#include "Adresa.hpp"
+#include "Info.hpp"
+#include "Ostava.hpp"
+#include "Svlacionica.hpp"
+#include "Kupatilo.hpp"
+#include "Prostorija.hpp"
+#include "Tegovi.hpp"
+#include "Sprava.hpp"
+#include "FitnesOprema.hpp"
+#include "Oprema.hpp"
+#include "Inventar.hpp"
+#include "Osoba.hpp"
+#include "Zaposleni.hpp"
+#include "Clan.hpp"
+#include "ReklamniMaterijal.hpp"
+#include "Suplementi.hpp"
+#include "Clanarina.hpp"
+#include "PlanTreninga.hpp"
+#include "Kasa.hpp"
+#include "Teretana.hpp"
 using namespace std;
 int main()
 {
