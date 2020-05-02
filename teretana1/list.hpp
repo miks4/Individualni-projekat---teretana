@@ -27,6 +27,33 @@ class List{
 		List(const List<T>&);
 
 		List<T>& operator=(const List<T>&);
+        listEl* get_head()const{
+            return head;
+        }
+        listEl* get_tail()const{
+            return tail;
+        }
+        int get_brEl()const{
+            return noEl;
+        }
+        friend bool operator==(List<T> &r1,List<T> &r2){
+            if(r1.get_head()!=r2.get_head() || r1.get_tail()!=r2.get_tail() || r1.get_brEl()!=r2.get_brEl()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+		friend bool operator!=(List<T> &r1,List<T> &r2){
+            if(r1 == r2){
+                return false;
+            }
+            else{
+                return true;
+            }
+		}
+
 
 		virtual ~List();
 
@@ -87,6 +114,7 @@ List<T>& List<T>::operator=(const List<T>& rl) {
 	}
 	return *this;
 }
+
 
 template <class T>
 List<T>::~List() {
