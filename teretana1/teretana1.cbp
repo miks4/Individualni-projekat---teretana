@@ -36,6 +36,7 @@
 		<Unit filename="dinstring.hpp" />
 		<Unit filename="list.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="pomMain.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

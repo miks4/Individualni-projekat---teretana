@@ -1,7 +1,6 @@
 #include <iostream>
 #include "dinstring.hpp"
 #include "list.hpp"
-
 using namespace std;
 enum GRAD { NOVI_SAD = 1, BEOGRAD, NIS, SRBOBRAN };
 enum DANI { RADNI_DAN_I_SUBOTA = 1, NEDELJA, PRAZNICI };
