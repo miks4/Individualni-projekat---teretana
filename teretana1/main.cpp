@@ -1,9 +1,10 @@
 #include <iostream>
 #include "dinstring.hpp"
 #include "list.hpp"
+
 using namespace std;
-enum DANI { RADNI_DAN_I_SUBOTA = 1, NEDELJA, PRAZNICI };
 enum GRAD { NOVI_SAD = 1, BEOGRAD, NIS, SRBOBRAN };
+enum DANI { RADNI_DAN_I_SUBOTA = 1, NEDELJA, PRAZNICI };
 enum REZERVNI_DEO { SAJLA = 1, POMOCNA_SIPKA, TEG, SUNDJER };
 enum SREDSTVO_ZA_HIGIJENU { OSVEZIVAC = 1, KRPA, SPREJ };
 enum VRSTA_TEGA { SIPKA = 1, BUCICA };
@@ -15,8 +16,8 @@ enum VRSTA_SUPLEMENATA { PROTEIN = 1, KREATIN, AMINOKISELINA };
 enum VRSTA_CLANA { OBICAN = 1, VIP };
 enum ZAPOSLENI { TRENER = 1,CISTACICA,POMOCNIK };
 
-
 class RadnoVreme {
+
 private:
     int krajRadnogVremena;
     int pocetakRadnogVremena;
@@ -100,6 +101,7 @@ public:
         ulicniBr = br;
     }
 };
+
 class Info {
 private:
     Adresa adresa;
@@ -489,7 +491,6 @@ public:
         return izlaz;
     }
 };
-
 
 class Tegovi {
 protected:
@@ -1074,6 +1075,7 @@ public:
         trajanje = t;
     }
 };
+
 class Kasa {
 private:
     int profit;
@@ -1484,7 +1486,8 @@ public:
         }
         return out;
     }
-   /* friend bool operator==(Zaposleni &z1,Zaposleni &z2){
+   /*
+    friend bool operator==(Zaposleni &z1,Zaposleni &z2){
         if(z1.get_brTelefona()!=z2.get_brTelefona()){
             return false;
         }
@@ -1499,7 +1502,8 @@ public:
         else{
             return true;
         }
-    }*/
+    }
+    */
 };
 
 class Teretana {
@@ -1854,6 +1858,7 @@ public:
         }
     }
 };
+
 int main()
 {
     Teretana tr;
@@ -1870,7 +1875,7 @@ int main()
 
           cout << "\n\n\n\t\tOPREMA BR. " << i << " JESTE SLEDECA:\n" << o << endl;
       };
-    */
+*/
     Inventar i;
     cout << "====================================================================" << endl;
     i.kupiOpremu(o1);
