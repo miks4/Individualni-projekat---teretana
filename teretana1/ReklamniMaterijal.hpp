@@ -41,9 +41,9 @@ public:
     void set_kacketi(const int k) { kacketi = k; }
     void set_kalendari(const int kal) { kalendari = kal; }
     void set_olovke(const int o) { olovke = o; }
-    int brojReklamnogMaterijala(){
-       int b = majice + trenerke + kacketi + olovke + kalendari;
-       return b;
+    int brojReklamnogMaterijala() {
+        int b = majice + trenerke + kacketi + olovke + kalendari;
+        return b;
     }
 };
 

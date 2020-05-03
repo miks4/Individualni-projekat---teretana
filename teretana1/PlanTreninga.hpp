@@ -53,5 +53,5 @@ public:
     void set_vrstaTreninga(const VRSTA_TRENINGA v) {
         vrstaTreninga = v;
     }
-};
+}
 #endif

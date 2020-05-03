@@ -1,8 +1,8 @@
 #include <iostream>
-
+#include "Prostorija.hpp"
 using namespace std;
 
-class Svlacionica {
+class Svlacionica : public Prostorija{
 protected:
     int ormaric;
     int klupa;
@@ -10,21 +10,21 @@ protected:
     int civiluk;
     bool podnoGrejanje;
 public:
-    Svlacionica() {
+    Svlacionica() : Prostorija(){
         ormaric = 10;
         klupa = 5;
         cipelarnik = 10;
         civiluk = 3;
         podnoGrejanje = true;
     }
-    Svlacionica(int o, int k, int c, int ci, bool p) {
+    Svlacionica(int o, int k, int c, int ci, bool p,int pr) : Prostorija(pr) {
         ormaric = o;
         klupa = k;
         cipelarnik = c;
         civiluk = ci;
         podnoGrejanje = p;
     }
-    Svlacionica(const Svlacionica& s) {
+    Svlacionica(const Svlacionica& s) : Prostorija((Prostorija)s) {
         ormaric = s.ormaric;
         klupa = s.klupa;
         cipelarnik = s.cipelarnik;
@@ -62,5 +62,9 @@ public:
     void set_podnoGrejanje(const bool p) {
         podnoGrejanje = p;
     }
+    int vratiBroj(){
+        return ormaric + klupa + cipelarnik + civiluk;
+    }
+
 };
 #endif

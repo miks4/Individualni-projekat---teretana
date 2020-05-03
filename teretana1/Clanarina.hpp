@@ -3,16 +3,16 @@
 using namespace std;
 class Clanarina {
 private:
-    int cena;
+    float cena;
     DinString datumUplate;
-    int trajanje;
+    DinString trajanje;
 public:
     Clanarina() {
         cena = 2000;
         datumUplate = "1.4.2020";
-        trajanje = 30;
+        trajanje = "2.4.2020";
     }
-    Clanarina(int c, DinString d, int t) {
+    Clanarina(float c, DinString d, DinString t) {
         cena = c;
         datumUplate = d;
         trajanje = t;
@@ -22,25 +22,30 @@ public:
         datumUplate = c.datumUplate;
         trajanje = c.trajanje;
     }
-    ~Clanarina(){}
-    int get_cena()const {
+    ~Clanarina() {}
+    float get_cena()const {
         return cena;
     }
     DinString get_datumUplate()const {
         return datumUplate;
     }
-    int get_trajanje()const {
+    DinString get_trajanje()const {
         return trajanje;
     }
-    void set_cena(const int c) {
+    void set_cena(const float c) {
         cena = c;
     }
     void set_datumUplate(const DinString d) {
         datumUplate = d;
     }
-    void set_trajanje(const int t) {
+    void set_trajanje(const DinString t) {
         trajanje = t;
     }
+    friend ostream& operator<<(ostream& out, const Clanarina& c){
+        out << "\n\tDatum uplate: "<<c.get_datumUplate()<<endl<<"\tClanarina Vam vazi do:"<<c.get_trajanje()<<endl<<"\tPlatili ste: "<<c.get_cena()<<" din."<<endl;
+        return out;
+    }
 };
+
 
 #endif

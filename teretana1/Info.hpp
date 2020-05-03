@@ -14,21 +14,21 @@ private:
     DinString telefon;
     DANI dan;
 public:
-    Info() : adresa(),radnoVreme() {
+    Info() : adresa(), radnoVreme() {
         kapacitet = 25;
         brTeretana = 3;
         velicina = 50;
         telefon = "0613150983";
         dan = RADNI_DAN_I_SUBOTA;
     }
-    Info(GRAD gg, DinString u, int br, int prv, int krv, int kkk, int ttt, int v, DinString tel, DANI d) : adresa(gg, u, br), radnoVreme(prv, krv) {
+    Info(GRAD gg, DinString u, int br, DinString prv, DinString krv, int kkk, int ttt, int v, DinString tel, DANI d) : adresa(gg, u, br), radnoVreme(prv, krv) {
         kapacitet = kkk;
         brTeretana = ttt;
         velicina = v;
         telefon = tel;
         dan = d;
     }
-    Info(const Info& i) : adresa(i.adresa),radnoVreme(i.radnoVreme) {
+    Info(const Info& i) : adresa(i.adresa), radnoVreme(i.radnoVreme) {
         kapacitet = i.kapacitet;
         brTeretana = i.brTeretana;
         velicina = i.velicina;
@@ -36,10 +36,10 @@ public:
         dan = i.dan;
     }
     ~Info() {}
-    int get_pocetakRadnoVremenaInfo()const {
+    DinString get_pocetakRadnoVremenaInfo()const {
         return radnoVreme.get_pocetak();
     }
-    int get_krajkRadnoVremenaInfo()const{
+    DinString get_krajkRadnoVremenaInfo()const {
         return radnoVreme.get_kraj();
     }
     DANI get_dan()const {
@@ -90,23 +90,23 @@ public:
     void set_telefon(const DinString tel) {
         telefon = tel;
     }
-    void set_pocetakRadnoVremenaInfo(const int p){
+    void set_pocetakRadnoVremenaInfo(const DinString p) {
         radnoVreme.set_pocetak(p);
     }
-    void set_krajRadnoVremenaInfo(const int k){
+    void set_krajRadnoVremenaInfo(const DinString k) {
         radnoVreme.set_kraj(k);
     }
     void vidiRadnoVreme() {
-        cout << "\t     RADNO VREME  RADNO VREME RADNO VREME "<<endl;
+        cout << "\t     RADNO VREME  RADNO VREME RADNO VREME " << endl;
         cout << "====================================================================" << endl;
-            cout << "radno vreme za vreme radnih dana je isto kao i subotom,dnevno radimo 12h."<<endl;
-            cout << "\tpocetak radnog vremena:" << radnoVreme.get_pocetak() << "h." << endl;
-            cout << "\tkraj radnog vremena:" << radnoVreme.get_kraj() << "h." << endl;
-            cout << "\tpraznicima i nedeljom ne radimo."<<endl;
-            cout << "====================================================================" << endl;
+        cout << "radno vreme za vreme radnih dana je isto kao i subotom." << endl;
+        cout << "\tpocetak radnog vremena:" << radnoVreme.get_pocetak()  << endl;
+        cout << "\tkraj radnog vremena:" << radnoVreme.get_kraj()  << endl;
+        cout << "\tpraznicima i nedeljom ne radimo." << endl;
+        cout << "====================================================================" << endl;
 
     }
-    Info& operator=(const Info &i){
+    Info& operator=(const Info& i) {
         adresa = i.adresa;
         radnoVreme = i.radnoVreme;
         kapacitet = i.kapacitet;
@@ -116,40 +116,39 @@ public:
         dan = i.dan;
         return *this;
     }
-    friend bool operator==(Info& i1,Info& i2) {
+    friend bool operator==(Info& i1, Info& i2) {
         if (i1.get_brTeretana() != i2.get_brTeretana() || i1.get_brUlice() != i2.get_brUlice() || i1.get_dan() != i2.get_dan() || i1.get_grad() != i2.get_grad() ||
             i1.get_kapacitet() != i2.get_kapacitet() || i1.get_krajkRadnoVremenaInfo() != i2.get_krajkRadnoVremenaInfo() || i1.get_pocetakRadnoVremenaInfo() != i2.get_pocetakRadnoVremenaInfo() ||
             i1.get_telefon() != i2.get_telefon() || i1.get_ulica() != i2.get_ulica() || i1.get_velicina() != i2.get_velicina()) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
-    friend bool operator!=(Info& i1,Info& i2) {
+    friend bool operator!=(Info& i1, Info& i2) {
         if (i1 == i2) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
-    friend bool operator<(Info &i1,Info &i2){
-        if(i1.get_velicina() < i2.get_velicina()){
+    friend bool operator<(Info& i1, Info& i2) {
+        if (i1.get_velicina() < i2.get_velicina()) {
             return true;
         }
-        else{
-                    return false;
+        else {
+            return false;
         }
     }
-    friend bool operator>(Info &i1,Info &i2){
-        if(i1.get_velicina() > i2.get_velicina()){
+    friend bool operator>(Info& i1, Info& i2) {
+        if (i1.get_velicina() > i2.get_velicina()) {
             return true;
         }
-        else{
-                    return false;
+        else {
+            return false;
         }
     }
 };
-
 #endif

@@ -1,27 +1,27 @@
 #include <iostream>
-
+#include "Oprema.hpp"
 using namespace std;
 enum VRSTA_TEGA { SIPKA = 1, BUCICA };
-class Tegovi {
+class Tegovi : public Oprema{
 protected:
     int tezina;
     VRSTA_TEGA teg;
     int brTegova;
     float kvalitetTegova;
 public:
-    Tegovi() {
+    Tegovi() : Oprema() {
         tezina = 20;
         teg = SIPKA;
         brTegova = 60;
         kvalitetTegova = 75;
     }
-    Tegovi(int t, VRSTA_TEGA v, int b, float k) {
+    Tegovi(int t, VRSTA_TEGA v, int b, float k,int kvan,float kval) : Oprema(kvan,kval) {
         tezina = t;
         teg = v;
         brTegova = b;
         kvalitetTegova = k;
     }
-    Tegovi(const Tegovi& t) {
+    Tegovi(const Tegovi& t) : Oprema((Oprema)t) {
         tezina = t.tezina;
         teg = t.teg;
         brTegova = t.brTegova;
@@ -52,6 +52,13 @@ public:
     void set_kvalitetTegova(const float k) {
         kvalitetTegova = k;
     }
+    DinString vratiTip(){
+        if(teg == SIPKA){
+            return " Sipka.";
+        }
+        else{
+            return " Bucica.";
+        }
+    }
 };
-
 #endif

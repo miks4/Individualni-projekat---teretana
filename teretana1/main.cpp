@@ -13,20 +13,20 @@ enum VRSTA_FITNES_OPREME { STRUNJACA = 1, LOPTA, DZAK, GUMA };
 enum VRSTA_TRENINGA { FITNES = 1, BODYWEIGHT, BODYBUILDING };
 enum VRSTA_SUPLEMENATA { PROTEIN = 1, KREATIN, AMINOKISELINA };
 enum VRSTA_CLANA { OBICAN = 1, VIP };
-enum ZAPOSLENI { TRENER = 1,CISTACICA,POMOCNIK };
+enum ZAPOSLENI { TRENER = 1, CISTACICA, POMOCNIK };
 
 class RadnoVreme {
 
 private:
-    int krajRadnogVremena;
-    int pocetakRadnogVremena;
+    DinString krajRadnogVremena;
+    DinString pocetakRadnogVremena;
 
 public:
     RadnoVreme() {
-        krajRadnogVremena = 22;
-        pocetakRadnogVremena = 10;
+        krajRadnogVremena = "10:00:00AM";
+        pocetakRadnogVremena = "22:00:00PM";
     }
-    RadnoVreme(int k, int p) {
+    RadnoVreme(DinString k,DinString p) {
         krajRadnogVremena = k;
         pocetakRadnogVremena = p;
     }
@@ -35,28 +35,19 @@ public:
         krajRadnogVremena = k.pocetakRadnogVremena;
     }
     ~RadnoVreme() {}
-    int get_kraj()const {
+    DinString get_kraj()const {
         return krajRadnogVremena;
     }
-    int get_pocetak()const {
+    DinString get_pocetak()const {
         return pocetakRadnogVremena;
     }
-    void set_kraj(const int k) {
+    void set_kraj(const DinString k) {
         krajRadnogVremena = k;
     }
-    void set_pocetak(const int p) {
+    void set_pocetak(const DinString p) {
         pocetakRadnogVremena = p;
     }
-    bool otvoreno(int v) {
-        if ((v > pocetakRadnogVremena) && (v < krajRadnogVremena)) {
-            return true;
-        }
-        return false;
-    }
-    int trajanjeRadnogVremena() {
-        int t = krajRadnogVremena - pocetakRadnogVremena;
-        return t;
-    }
+
 
 };
 class Adresa {
@@ -111,21 +102,21 @@ private:
     DinString telefon;
     DANI dan;
 public:
-    Info() : adresa(),radnoVreme() {
+    Info() : adresa(), radnoVreme() {
         kapacitet = 25;
         brTeretana = 3;
         velicina = 50;
         telefon = "0613150983";
         dan = RADNI_DAN_I_SUBOTA;
     }
-    Info(GRAD gg, DinString u, int br, int prv, int krv, int kkk, int ttt, int v, DinString tel, DANI d) : adresa(gg, u, br), radnoVreme(prv, krv) {
+    Info(GRAD gg, DinString u, int br, DinString prv, DinString krv, int kkk, int ttt, int v, DinString tel, DANI d) : adresa(gg, u, br), radnoVreme(prv, krv) {
         kapacitet = kkk;
         brTeretana = ttt;
         velicina = v;
         telefon = tel;
         dan = d;
     }
-    Info(const Info& i) : adresa(i.adresa),radnoVreme(i.radnoVreme) {
+    Info(const Info& i) : adresa(i.adresa), radnoVreme(i.radnoVreme) {
         kapacitet = i.kapacitet;
         brTeretana = i.brTeretana;
         velicina = i.velicina;
@@ -133,10 +124,10 @@ public:
         dan = i.dan;
     }
     ~Info() {}
-    int get_pocetakRadnoVremenaInfo()const {
+    DinString get_pocetakRadnoVremenaInfo()const {
         return radnoVreme.get_pocetak();
     }
-    int get_krajkRadnoVremenaInfo()const{
+    DinString get_krajkRadnoVremenaInfo()const {
         return radnoVreme.get_kraj();
     }
     DANI get_dan()const {
@@ -187,23 +178,23 @@ public:
     void set_telefon(const DinString tel) {
         telefon = tel;
     }
-    void set_pocetakRadnoVremenaInfo(const int p){
+    void set_pocetakRadnoVremenaInfo(const DinString p) {
         radnoVreme.set_pocetak(p);
     }
-    void set_krajRadnoVremenaInfo(const int k){
+    void set_krajRadnoVremenaInfo(const DinString k) {
         radnoVreme.set_kraj(k);
     }
     void vidiRadnoVreme() {
-        cout << "\t     RADNO VREME  RADNO VREME RADNO VREME "<<endl;
+        cout << "\t     RADNO VREME  RADNO VREME RADNO VREME " << endl;
         cout << "====================================================================" << endl;
-            cout << "radno vreme za vreme radnih dana je isto kao i subotom,dnevno radimo 12h."<<endl;
-            cout << "\tpocetak radnog vremena:" << radnoVreme.get_pocetak() << "h." << endl;
-            cout << "\tkraj radnog vremena:" << radnoVreme.get_kraj() << "h." << endl;
-            cout << "\tpraznicima i nedeljom ne radimo."<<endl;
-            cout << "====================================================================" << endl;
+        cout << "radno vreme za vreme radnih dana je isto kao i subotom." << endl;
+        cout << "\tpocetak radnog vremena:" << radnoVreme.get_pocetak()  << endl;
+        cout << "\tkraj radnog vremena:" << radnoVreme.get_kraj()  << endl;
+        cout << "\tpraznicima i nedeljom ne radimo." << endl;
+        cout << "====================================================================" << endl;
 
     }
-    Info& operator=(const Info &i){
+    Info& operator=(const Info& i) {
         adresa = i.adresa;
         radnoVreme = i.radnoVreme;
         kapacitet = i.kapacitet;
@@ -213,62 +204,87 @@ public:
         dan = i.dan;
         return *this;
     }
-    friend bool operator==(Info& i1,Info& i2) {
+    friend bool operator==(Info& i1, Info& i2) {
         if (i1.get_brTeretana() != i2.get_brTeretana() || i1.get_brUlice() != i2.get_brUlice() || i1.get_dan() != i2.get_dan() || i1.get_grad() != i2.get_grad() ||
             i1.get_kapacitet() != i2.get_kapacitet() || i1.get_krajkRadnoVremenaInfo() != i2.get_krajkRadnoVremenaInfo() || i1.get_pocetakRadnoVremenaInfo() != i2.get_pocetakRadnoVremenaInfo() ||
             i1.get_telefon() != i2.get_telefon() || i1.get_ulica() != i2.get_ulica() || i1.get_velicina() != i2.get_velicina()) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
-    friend bool operator!=(Info& i1,Info& i2) {
+    friend bool operator!=(Info& i1, Info& i2) {
         if (i1 == i2) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
-    friend bool operator<(Info &i1,Info &i2){
-        if(i1.get_velicina() < i2.get_velicina()){
+    friend bool operator<(Info& i1, Info& i2) {
+        if (i1.get_velicina() < i2.get_velicina()) {
             return true;
         }
-        else{
-                    return false;
+        else {
+            return false;
         }
     }
-    friend bool operator>(Info &i1,Info &i2){
-        if(i1.get_velicina() > i2.get_velicina()){
+    friend bool operator>(Info& i1, Info& i2) {
+        if (i1.get_velicina() > i2.get_velicina()) {
             return true;
         }
-        else{
-                    return false;
+        else {
+            return false;
         }
     }
 };
 
-class Ostava {
+class Prostorija {
+protected:
+    int predmeti;
+public:
+    Prostorija() {
+        predmeti = 400;
+    }
+    Prostorija(int d) {
+        predmeti = d;
+    }
+    Prostorija(const Prostorija& p) {
+        predmeti = p.predmeti;
+    }
+    ~Prostorija() {}
+    int get_predmeti()const {
+        return predmeti;
+    }
+    void set_predmeti(const int v) {
+        predmeti = v;
+    }
+    virtual DinString vratiTip(){}
+    virtual DinString vratiTip2(){}
+    virtual int vratiBroj(){}
+};
+
+class Ostava : public Prostorija{
 protected:
     int rezervniDelovi;
     int higijenskaredstva;
     REZERVNI_DEO tipRezervnogDela;
     SREDSTVO_ZA_HIGIJENU tipHigijenskogSredstva;
 public:
-    Ostava() {
+    Ostava() : Prostorija(){
         rezervniDelovi = 50;
         higijenskaredstva = 20;
         tipRezervnogDela = SAJLA;
         tipHigijenskogSredstva = SPREJ;
     }
-    Ostava(int d, int s, REZERVNI_DEO r, SREDSTVO_ZA_HIGIJENU h) {
+    Ostava(int d, int s, REZERVNI_DEO r, SREDSTVO_ZA_HIGIJENU h,int pr) : Prostorija(pr) {
         rezervniDelovi = d;
         higijenskaredstva = s;
         tipRezervnogDela = r;
         tipHigijenskogSredstva = h;
     }
-    Ostava(const Ostava& o) {
+    Ostava(const Ostava& o) : Prostorija((Prostorija)o) {
         rezervniDelovi = o.rezervniDelovi;
         higijenskaredstva = o.higijenskaredstva;
         tipRezervnogDela = o.tipRezervnogDela;
@@ -299,8 +315,37 @@ public:
     void set_tipSredstvoZaHigijenu(const SREDSTVO_ZA_HIGIJENU h) {
         tipHigijenskogSredstva = h;
     }
+    DinString vratiTip(){
+
+        if(tipHigijenskogSredstva == OSVEZIVAC){
+            return " Osvezivac.";
+        }
+        else if(tipHigijenskogSredstva == KRPA){
+            return " Krpa.";
+        }
+        else{
+            return " Sprej.";
+        }
+    }
+    DinString vratiTip2(){
+        if(tipRezervnogDela == TEG){
+            return " Teg.";
+        }
+        else if(tipRezervnogDela == SAJLA){
+            return " Sajla.";
+        }
+        else if(tipRezervnogDela == POMOCNA_SIPKA){
+            return " Sipka.";
+        }
+        else{
+            return " Sundjer.";
+        }
+    }
+    int vratiBroj(){
+        return higijenskaredstva + rezervniDelovi;
+    }
 };
-class Svlacionica {
+class Svlacionica : public Prostorija{
 protected:
     int ormaric;
     int klupa;
@@ -308,21 +353,21 @@ protected:
     int civiluk;
     bool podnoGrejanje;
 public:
-    Svlacionica() {
+    Svlacionica() : Prostorija(){
         ormaric = 10;
         klupa = 5;
         cipelarnik = 10;
         civiluk = 3;
         podnoGrejanje = true;
     }
-    Svlacionica(int o, int k, int c, int ci, bool p) {
+    Svlacionica(int o, int k, int c, int ci, bool p,int pr) : Prostorija(pr) {
         ormaric = o;
         klupa = k;
         cipelarnik = c;
         civiluk = ci;
         podnoGrejanje = p;
     }
-    Svlacionica(const Svlacionica& s) {
+    Svlacionica(const Svlacionica& s) : Prostorija((Prostorija)s) {
         ormaric = s.ormaric;
         klupa = s.klupa;
         cipelarnik = s.cipelarnik;
@@ -360,27 +405,31 @@ public:
     void set_podnoGrejanje(const bool p) {
         podnoGrejanje = p;
     }
+    int vratiBroj(){
+        return ormaric + klupa + cipelarnik + civiluk;
+    }
+
 };
-class Kupatilo {
+class Kupatilo : public Prostorija {
 protected:
     int pisoar;
     int tusKabina;
     int umivaonik;
     int ogledala;
 public:
-    Kupatilo() {
+    Kupatilo() : Prostorija() {
         pisoar = 7;
         tusKabina = 2;
         umivaonik = 3;
         ogledala = 3;
     }
-    Kupatilo(int p, int t, int u, int o) {
+    Kupatilo(int p, int t, int u, int o,int pr) : Prostorija(pr) {
         pisoar = p;
         tusKabina = t;
         umivaonik = u;
         ogledala = o;
     }
-    Kupatilo(const Kupatilo& k) {
+    Kupatilo(const Kupatilo& k) : Prostorija((Prostorija)k) {
         pisoar = k.pisoar;
         tusKabina = k.tusKabina;
         umivaonik = k.umivaonik;
@@ -411,106 +460,65 @@ public:
     void set_ogledalo(const int o) {
         ogledala = o;
     }
+    int vratiBroj(){
+        return tusKabina + umivaonik + ogledala + pisoar;
+    }
 };
-class Prostorija : public Ostava, public Kupatilo, public Svlacionica {
+
+class Oprema{
 private:
-    int predmeti;
+    float kvalitet;
+    int kvantitet;
 public:
-    Prostorija() : Ostava(), Kupatilo(), Svlacionica() {
-        predmeti = higijenskaredstva + rezervniDelovi + klupa + ormaric + cipelarnik + civiluk;
+    Oprema()  {
+        kvalitet = 100;
+        kvantitet = 170;
     }
-    Prostorija(int d, int s, REZERVNI_DEO r, SREDSTVO_ZA_HIGIJENU h, int p, int t, int u, int o, int orm, int k, int c, int ci, bool pg) : Ostava(d, s, r, h), Kupatilo(p, t, u, o), Svlacionica(orm, k, c, ci, pg) {
-        predmeti = d + s + p + t + u + o + orm + k + c + ci;
+    Oprema(int bf, float kf){
+        kvalitet = 80;
+        kvantitet = 150;
     }
-    Prostorija(const Prostorija& p) : Ostava((Ostava)p), Kupatilo((Kupatilo)p), Svlacionica((Svlacionica)p) {
-        predmeti = p.predmeti;
+    Oprema(const Oprema& o) {
+        kvalitet = o.kvalitet;
+        kvantitet = o.kvantitet;
     }
-    ~Prostorija() {}
-    int get_predmeti()const {
-        return predmeti;
+    ~Oprema() {}
+    float get_kvalitet()const {
+        return kvalitet;
     }
-    void set_predmeti(const int v) {
-        predmeti = v;
+    int get_kvantitet()const {
+        return kvantitet;
     }
-    friend ostream& operator<<(ostream& izlaz, const Prostorija& p) {
-        if (p.predmeti > 0) {
-            izlaz << "Broj stvari:";
-            izlaz << p.predmeti;
-            izlaz << "\nOSTAVA:";
-            izlaz << "\n~~~~~~~";
-            izlaz << "\n\tRezervni deo:";
-            if (p.tipRezervnogDela == SAJLA) { izlaz << "Sajla"; }
-            else if (p.tipRezervnogDela == POMOCNA_SIPKA) { izlaz << "Pomocna sipka"; }
-            else if (p.tipRezervnogDela == TEG) { izlaz << "Teg"; }
-            else if (p.tipRezervnogDela == SUNDJER) { izlaz << "Sundjer"; }
-            else {
-                izlaz << "Ne postoji rezervni deo";
-            }
-            izlaz << "\n\tBroj rezervnog dela:";
-            izlaz << p.rezervniDelovi;
-            izlaz << "\n\tHigijensko sredstvo:";
-            if (p.tipHigijenskogSredstva == OSVEZIVAC) { izlaz << "Osvezivac"; }
-            else if (p.tipHigijenskogSredstva == KRPA) { izlaz << "Krpa"; }
-            else if (p.tipHigijenskogSredstva == SPREJ) { izlaz << "Sprej"; }
-            else {
-                izlaz << "Ne postoji higijensko sredstvo";
-            }
-            izlaz << "\n\tBroj higijenskog sredstva:";
-            izlaz << p.higijenskaredstva;
+    void set_kvalitet(const float k) {
+        kvalitet = k;
+    }
+    void set_kvantitet(const int k1) {
+        kvantitet = k1;
+    }
 
-            izlaz << "\nSVLACIONICA:";
-            izlaz << "\n~~~~~~~~~~~~";
-            izlaz << "\n\tBroj klupa:";
-            izlaz << p.klupa;
-            izlaz << "\n\tBroj ormarica:";
-            izlaz << p.ormaric;
-            izlaz << "\n\tBroj cipelarnika:";
-            izlaz << p.cipelarnik;
-            izlaz << "\n\tBroj civiluka:";
-            izlaz << p.civiluk;
-            izlaz << "\n\tPodno grejanje?";
-            if (p.podnoGrejanje == true) {
-                izlaz << "\n\tNasa teretana ima podno grejanje.";
-            }
-            else {
-                izlaz << "\n\tNasa teretana nema podno grejanje";
-            }
-
-            izlaz << "\nKUPATILO:";
-            izlaz << "\n~~~~~~~~~";
-            izlaz << "\n\tBroj tus kabina:";
-            izlaz << p.tusKabina;
-            izlaz << "\n\tBroj pisoara:";
-            izlaz << p.pisoar;
-            izlaz << "\n\tBroj umivaonika:";
-            izlaz << p.umivaonik;
-            izlaz << "\n\tBroj ogledala:";
-            izlaz << p.ogledala;
-        }
-        return izlaz;
-    }
+    virtual DinString vratiTip(){}
 };
 
-class Tegovi {
+class Tegovi : public Oprema{
 protected:
     int tezina;
     VRSTA_TEGA teg;
     int brTegova;
     float kvalitetTegova;
 public:
-    Tegovi() {
+    Tegovi() : Oprema() {
         tezina = 20;
         teg = SIPKA;
         brTegova = 60;
         kvalitetTegova = 75;
     }
-    Tegovi(int t, VRSTA_TEGA v, int b, float k) {
+    Tegovi(int t, VRSTA_TEGA v, int b, float k,int kvan,float kval) : Oprema(kvan,kval) {
         tezina = t;
         teg = v;
         brTegova = b;
         kvalitetTegova = k;
     }
-    Tegovi(const Tegovi& t) {
+    Tegovi(const Tegovi& t) : Oprema((Oprema)t) {
         tezina = t.tezina;
         teg = t.teg;
         brTegova = t.brTegova;
@@ -541,30 +549,34 @@ public:
     void set_kvalitetTegova(const float k) {
         kvalitetTegova = k;
     }
+    DinString vratiTip(){
+        if(teg == SIPKA){
+            return " Sipka.";
+        }
+        else{
+            return " Bucica.";
+        }
+    }
 };
-class Sprava {
+class Sprava : public Oprema{
 protected:
     TIP_SPRAVE tipSPrave;
     STANJE_SPRAVE stanjeSprave;
-    int brSprava;
     float kvalitetSprava;
 public:
-    Sprava() {
+    Sprava() : Oprema() {
         tipSPrave = RUKE;
         stanjeSprave = ODLICNO;
-        brSprava = 20;
         kvalitetSprava = 90;
     }
-    Sprava(TIP_SPRAVE t, STANJE_SPRAVE s, int b, float k) {
+    Sprava(TIP_SPRAVE t, STANJE_SPRAVE s, float k,int kvan,float kval) : Oprema(kvan,kval) {
         tipSPrave = t;
         stanjeSprave = s;
-        brSprava = b;
         kvalitetSprava = k;
     }
-    Sprava(const Sprava& s) {
+    Sprava(const Sprava& s) : Oprema((Oprema)s) {
         tipSPrave = s.tipSPrave;
         stanjeSprave = s.stanjeSprave;
-        brSprava = s.brSprava;
         kvalitetSprava = s.kvalitetSprava;
     }
     ~Sprava() {}
@@ -574,9 +586,7 @@ public:
     STANJE_SPRAVE get_stanjeSprave()const {
         return stanjeSprave;
     }
-    int get_brSprava()const {
-        return brSprava;
-    }
+
     float get_kvalitetSprava()const {
         return kvalitetSprava;
     }
@@ -586,9 +596,7 @@ public:
     void set_stanjeSprave(const STANJE_SPRAVE s) {
         stanjeSprave = s;
     }
-    void set_brSprava(const int b) {
-        brSprava = b;
-    }
+
     void set_kvalitetSprava(const float k) {
         kvalitetSprava = k;
     }
@@ -601,89 +609,6 @@ public:
             return false;
         }
     }
-    virtual void popravi() {}
-};
-class FitnesOprema {
-protected:
-    VRSTA_FITNES_OPREME vrstaFitnesOpreme;
-    int amortizacija;
-    int brFitnesOpreme;
-    float kvalitetFitnesOpreme;
-public:
-    FitnesOprema() {
-        vrstaFitnesOpreme = STRUNJACA;
-        amortizacija = 2;
-        brFitnesOpreme = 40;
-        kvalitetFitnesOpreme = 80;
-    }
-    FitnesOprema(VRSTA_FITNES_OPREME v, int a, int b, float k) {
-        vrstaFitnesOpreme = v;
-        amortizacija = a;
-        brFitnesOpreme = b;
-        kvalitetFitnesOpreme = k;
-    }
-    FitnesOprema(const FitnesOprema& f) {
-        vrstaFitnesOpreme = f.vrstaFitnesOpreme;
-        amortizacija = f.amortizacija;
-        brFitnesOpreme = f.brFitnesOpreme;
-        kvalitetFitnesOpreme = f.kvalitetFitnesOpreme;
-    }
-    ~FitnesOprema() {}
-    VRSTA_FITNES_OPREME get_vrstaFitnesOpreme()const {
-        return vrstaFitnesOpreme;
-    }
-    int get_amortizacija()const {
-        return amortizacija;
-    }
-    int get_brFitnesOpreme()const {
-        return brFitnesOpreme;
-    }
-    float get_kvalitetFitnesOpreme()const {
-        return kvalitetFitnesOpreme;
-    }
-    void set_vrstaFitnesOpreme(const VRSTA_FITNES_OPREME v) {
-        vrstaFitnesOpreme = v;
-    }
-    void set_amortizacija(const int a) {
-        amortizacija = a;
-    }
-    void set_brFitnesOpreme(const int b) {
-        brFitnesOpreme = b;
-    }
-    void set_kvalitetFitnesOpreme(const float k) {
-        kvalitetFitnesOpreme = k;
-    }
-};
-class Oprema : public Tegovi, public Sprava, public FitnesOprema {
-private:
-    float kvalitet;
-    int kvantitet;
-public:
-    Oprema() : Tegovi(), Sprava(), FitnesOprema() {
-        kvalitet = 100;
-        kvantitet = 170;
-    }
-    Oprema(int t, VRSTA_TEGA v, int bt, float kt, TIP_SPRAVE ts, STANJE_SPRAVE s, int bs, float ks, VRSTA_FITNES_OPREME vfo, int a, int bf, float kf) : Tegovi(t, v, bt, kt), Sprava(ts, s, bs, ks), FitnesOprema(vfo, a, bf, kf) {
-        kvalitet = (kt + ks + kf) / 3;
-        kvantitet = bt + bs + bf;
-    }
-    Oprema(const Oprema& o) : Tegovi((Tegovi)o), Sprava((Sprava)o), FitnesOprema((FitnesOprema)o) {
-        kvalitet = o.kvalitet;
-        kvantitet = o.kvantitet;
-    }
-    ~Oprema() {}
-    float get_kvalitet()const {
-        return kvalitet;
-    }
-    int get_kvantitet()const {
-        return kvantitet;
-    }
-    void set_kvalitet(const float k) {
-        kvalitet = k;
-    }
-    void set_kvantitet(const int k1) {
-        kvantitet = k1;
-    }
     void popravi() {
         if (staviNaPopravak() == true) {
             if (stanjeSprave == NA_POPRAVCI) {
@@ -692,76 +617,95 @@ public:
         }
 
     }
-    friend ostream& operator<<(ostream& out, const Oprema& o) {
-        if (o.kvantitet > 0) {
-
-            out << "Kvalitet celokupne opreme:";
-            out << o.kvalitet;
-            out << "\nKvantitet celokupne opreme:";
-            out << o.kvantitet;
-
-            out << "\nTEGOVI:";
-            out << "\n~~~~~~~";
-            out << "\n\tVrsta tega:";
-            if (o.teg == SIPKA) {
-                out << "Sipka";
-            }
-            else if (o.teg == BUCICA) {
-                out << "Bucica";
-            }
-            else { out << "Vrsta tega ne postoji"; }
-
-            out << "\n\tTezina vrste tega:";
-            out << o.tezina;
-            out << "\n\tBroj tegova u teretani:";
-            out << o.brTegova;
-            out << "\n\tKvalitet tegova u teretani:";
-            out << o.kvalitetTegova;
-
-            out << "\nSPRAVE:";
-            out << "\n~~~~~~~";
-            out << "\n\tTip sprave:";
-            if (o.tipSPrave == RUKE) { out << "Za ruke"; }
-            else if (o.tipSPrave == GRUDI) { out << "Za grudi"; }
-            else if (o.tipSPrave == NOGE) { out << "Za noge"; }
-            else if (o.tipSPrave == LEDJA) { out << "Za ledja"; }
-            else if (o.tipSPrave == STOMAK) { out << "Za stomak"; }
-            else if (o.tipSPrave == RAME) { out << "Za rame"; }
-            else { out << "Tip sprave ne postoji"; }
-
-            out << "\n\tstanje sprave:";
-            if (o.stanjeSprave == ODLICNO) { out << "Moze se koristiti"; }
-            else if (o.stanjeSprave == LOSE) { out << "Trebalo b staviti da se popravlja"; }
-            else if (o.stanjeSprave == NA_POPRAVCI) { out << "Ne moze da se koristi, trenutno je na popravci"; }
-            else {
-                out << "Stanje spave ne postoji";
-            }
-            out << "\n\tBroj sprava u teretani:";
-            out << o.brSprava;
-            out << "\n\tKvalitet sprava u teretani:";
-            out << o.kvalitetSprava;
-
-            out << "\nFITNES OPREMA:";
-            out << "\n~~~~~~~~~~~~~~";
-            out << "\n\tVrsta fitnes opreme:";
-            if (o.vrstaFitnesOpreme == STRUNJACA) { out << "Strunjaca"; }
-            else if (o.vrstaFitnesOpreme == LOPTA) { out << "Lopta"; }
-            else if (o.vrstaFitnesOpreme == DZAK) { out << "DZak"; }
-            else if (o.vrstaFitnesOpreme == GUMA) { out << "Guma"; }
-            else {
-                out << "Vrsta fitens opreme ne postoji";
-            }
-
-            out << "\n\tAmortizacija vrste fitnes opreme:";
-            out << o.amortizacija;
-            out << "\n\tBroj fitnes opreme u teretani:";
-            out << o.brFitnesOpreme;
-            out << "\n\tKvalitet fitnes opreme u teretani:";
-            out << o.kvalitetFitnesOpreme;
+    DinString vratiTip(){
+        if(tipSPrave == RUKE){
+            return " Za ruke.";
         }
-        return out;
+        else if(tipSPrave == NOGE){return " Za noge.";}
+        else if(tipSPrave == GRUDI){return " Za grudi.";}
+        else if(tipSPrave == LEDJA){return " Za ledja.";}
+        else if(tipSPrave == RAME){return " Za rame.";}
+        else{return " Za stomak.";}
     }
 };
+class FitnesOprema : public Oprema{
+protected:
+    VRSTA_FITNES_OPREME vrstaFitnesOpreme;
+    float amortizacija;
+    int brFitnesOpreme;
+    float kvalitetFitnesOpreme;
+    DinString nabavljena;
+    DinString garancija;
+public:
+    FitnesOprema() : Oprema() {
+        vrstaFitnesOpreme = STRUNJACA;
+        amortizacija = 2;
+        brFitnesOpreme = 40;
+        kvalitetFitnesOpreme = 80;
+        nabavljena = "1.1.2020";
+        garancija = "1.1.2021";
+    }
+    FitnesOprema(VRSTA_FITNES_OPREME v, float a, int b, float k,DinString n,DinString g,int kvan,float kval) : Oprema(kvan,kval) {
+        vrstaFitnesOpreme = v;
+        amortizacija = a;
+        brFitnesOpreme = b;
+        kvalitetFitnesOpreme = k;
+        nabavljena = n;
+        garancija = g;
+    }
+    FitnesOprema(const FitnesOprema& f) : Oprema((Oprema)f) {
+        vrstaFitnesOpreme = f.vrstaFitnesOpreme;
+        amortizacija = f.amortizacija;
+        brFitnesOpreme = f.brFitnesOpreme;
+        kvalitetFitnesOpreme = f.kvalitetFitnesOpreme;
+        nabavljena = f.nabavljena;
+        garancija = f.garancija;
+    }
+    ~FitnesOprema() {}
+    VRSTA_FITNES_OPREME get_vrstaFitnesOpreme()const {
+        return vrstaFitnesOpreme;
+    }
+    float get_amortizacija()const {
+        return amortizacija;
+    }
+    int get_brFitnesOpreme()const {
+        return brFitnesOpreme;
+    }
+    float get_kvalitetFitnesOpreme()const {
+        return kvalitetFitnesOpreme;
+    }
+    DinString get_nabavljena()const{
+        return nabavljena;
+    }
+    DinString get_garancija()const{
+        return garancija;
+    }
+    void set_vrstaFitnesOpreme(const VRSTA_FITNES_OPREME v) {
+        vrstaFitnesOpreme = v;
+    }
+    void set_amortizacija(const float a) {
+        amortizacija = a;
+    }
+    void set_brFitnesOpreme(const int b) {
+        brFitnesOpreme = b;
+    }
+    void set_kvalitetFitnesOpreme(const float k) {
+        kvalitetFitnesOpreme = k;
+    }
+    void set_naavljena(const DinString n){
+        nabavljena = n;
+    }
+    void set_garancija(const DinString g){
+        garancija = g;
+    }
+    DinString vratiTip(){
+        if(vrstaFitnesOpreme == STRUNJACA){return " Strunjaca.";}
+        else if(vrstaFitnesOpreme == LOPTA){return " Lopta.";}
+        else if(vrstaFitnesOpreme == DZAK){return " DZak.";}
+        else{return " Guma.";}
+    }
+};
+
 
 class Inventar {
 private:
@@ -771,26 +715,28 @@ private:
     List<Oprema> oprema;
     List<Prostorija> prostorija;
 public:
-    Inventar(){
+    Inventar() : oprema(),prostorija(){
         parkingMesta = 10;
         kapacitet = 400;
         predmetiMax = 400;
     }
-    Inventar(int pp, int kk, int mm) {
+    Inventar(int pp, int kk, int mm,List<Oprema> o,List<Prostorija> p) {
         parkingMesta = pp;
         kapacitet = kk;
         predmetiMax = mm;
+        oprema = o;
+        prostorija = p;
     }
-    Inventar(const Inventar& i) {
+    Inventar(const Inventar& i) : oprema(i.oprema),prostorija(i.prostorija) {
         parkingMesta = i.parkingMesta;
         kapacitet = i.kapacitet;
         predmetiMax = i.predmetiMax;
     }
     ~Inventar() {}
-    List<Oprema>& get_oprema(){
+    List<Oprema>& get_oprema() {
         return oprema;
     }
-    List<Prostorija>& get_prostorija(){
+    List<Prostorija>& get_prostorija() {
         return prostorija;
     }
     int get_paarkingMesta()const {
@@ -811,6 +757,12 @@ public:
     void set_maxBrojPredmeta(const int br) {
         predmetiMax = br;
     }
+    void set_oprema(List<Oprema> o){
+        oprema = o;
+    }
+    void set_prostorija(List<Prostorija> p){
+        prostorija = p;
+    }
     bool kupiOpremu(const Oprema& o) {
         if (oprema.size() < kapacitet) {
             return oprema.add(oprema.size() + 1, o);
@@ -823,11 +775,16 @@ public:
         }
         else {
             Oprema o;
+            Tegovi t;
+            Sprava s;
+            FitnesOprema f;
             cout << "    SPISAK OPREME      SPISAK OPREME       SPISAK OPREME" << endl;
             cout << "====================================================================" << endl;
             for (int i = 1; i <= oprema.size(); i++) {
                 oprema.read(i, o);
-                cout << o << endl;
+                cout << "Broj tegova:"<<t.get_brTegova()<<", vrsta:"<<t.vratiTip()<<endl;
+                cout << "Broj sprava: 20"<<", vrsta:"<<s.vratiTip()<<endl;
+                cout << "Broj fitnes opreme:"<<f.get_brFitnesOpreme()<<", vrsta:"<<f.vratiTip()<<endl;
                 cout << "====================================================================" << endl;
             }
         }
@@ -844,16 +801,21 @@ public:
         }
         else {
             Prostorija p;
+            Ostava o;
+            Svlacionica s;
+            Kupatilo k;
             cout << " PREGLED PROSTORIJA     PREGLED PROSTORIJA      PREGLED PROSTORIJA" << endl;
             cout << "====================================================================" << endl;
             for (int i = 1; i <= prostorija.size(); i++) {
                 prostorija.read(i, p);
-                cout << p << endl;
+                cout << "OSTAVA"<< endl<< "ukupno predmeta:" << o.vratiBroj() <<endl<<"tip 1.prdmeta:" << o.vratiTip()<<endl<<"tip 2. predmeta"<<o.vratiTip2()<<endl;
+                cout << "SVLACIONICA"<< endl<< "ukupno predmeta:" << s.vratiBroj()<<endl;
+                cout << "KUPATILO"<< endl<< "ukupno predmeta:" << k.vratiBroj() <<endl;
                 cout << "====================================================================" << endl;
             }
         }
     }
-    Inventar& operator=(const Inventar &i){
+    Inventar& operator=(const Inventar& i) {
         parkingMesta = i.parkingMesta;
         kapacitet = i.kapacitet;
         predmetiMax = i.predmetiMax;
@@ -861,37 +823,37 @@ public:
         prostorija = i.prostorija;
         return *this;
     }
-    friend bool operator==(Inventar &i1,Inventar &i2){
-        if(i1.get_kapacitet()!=i2.get_kapacitet() || i1.get_paarkingMesta()!=i2.get_paarkingMesta() || i1.get_maxBrojPredmeta()!=i2.get_maxBrojPredmeta() ||
-            i1.get_oprema()!=i2.get_oprema() || i1.get_prostorija()!=i2.get_prostorija()){
-                    return false;
-        }
-        else{
-            return true;
-        }
-    }
-    friend bool operator!=(Inventar &i1,Inventar &i2){
-        if(i1 == i2){
+    friend bool operator==(Inventar& i1, Inventar& i2) {
+        if (i1.get_kapacitet() != i2.get_kapacitet() || i1.get_paarkingMesta() != i2.get_paarkingMesta() || i1.get_maxBrojPredmeta() != i2.get_maxBrojPredmeta() ||
+            i1.get_oprema() != i2.get_oprema() || i1.get_prostorija() != i2.get_prostorija()) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
-    friend bool operator<(Inventar &i1,Inventar &i2){
-        if(i1.get_kapacitet() < i2.get_kapacitet()){
-            return true;
+    friend bool operator!=(Inventar& i1, Inventar& i2) {
+        if (i1 == i2) {
+            return false;
         }
-        else{
-               return false;
+        else {
+            return true;
         }
     }
-    friend bool operator>(Inventar &i1,Inventar &i2){
-        if(i1.get_kapacitet() > i2.get_kapacitet()){
+    friend bool operator<(Inventar& i1, Inventar& i2) {
+        if (i1.get_kapacitet() < i2.get_kapacitet()) {
             return true;
         }
-        else{
-               return false;
+        else {
+            return false;
+        }
+    }
+    friend bool operator>(Inventar& i1, Inventar& i2) {
+        if (i1.get_kapacitet() > i2.get_kapacitet()) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 };
@@ -936,9 +898,9 @@ public:
     void set_kacketi(const int k) { kacketi = k; }
     void set_kalendari(const int kal) { kalendari = kal; }
     void set_olovke(const int o) { olovke = o; }
-    int brojReklamnogMaterijala(){
-       int b = majice + trenerke + kacketi + olovke + kalendari;
-       return b;
+    int brojReklamnogMaterijala() {
+        int b = majice + trenerke + kacketi + olovke + kalendari;
+        return b;
     }
 };
 class PlanTreninga {
@@ -996,55 +958,46 @@ class Suplementi {
 private:
     int cena;
     VRSTA_SUPLEMENATA suplement;
-    int broj;
 public:
     Suplementi() {
         cena = 150;
         suplement = PROTEIN;
-        broj = 1000;
     }
-    Suplementi(int c, VRSTA_SUPLEMENATA v,int b) {
+    Suplementi(int c, VRSTA_SUPLEMENATA v) {
         cena = c;
         suplement = v;
-        broj = b;
     }
     Suplementi(const Suplementi& s) {
         cena = s.cena;
         suplement = s.suplement;
-        broj = s.broj;
     }
-    ~Suplementi(){}
+    ~Suplementi() {}
     int get_cena()const {
         return cena;
     }
     VRSTA_SUPLEMENATA get_suplement()const {
         return suplement;
     }
-    int get_broj()const{
-        return broj;
-    }
+
     void set_cena(const int c) {
         cena = c;
     }
     void set_suplement(const VRSTA_SUPLEMENATA v) {
         suplement = v;
     }
-    void set_broj(const int b){
-        broj = b;
-    }
 };
 class Clanarina {
 private:
-    int cena;
+    float cena;
     DinString datumUplate;
-    int trajanje;
+    DinString trajanje;
 public:
     Clanarina() {
         cena = 2000;
         datumUplate = "1.4.2020";
-        trajanje = 30;
+        trajanje = "2.4.2020";
     }
-    Clanarina(int c, DinString d, int t) {
+    Clanarina(float c, DinString d, DinString t) {
         cena = c;
         datumUplate = d;
         trajanje = t;
@@ -1054,196 +1007,96 @@ public:
         datumUplate = c.datumUplate;
         trajanje = c.trajanje;
     }
-    ~Clanarina(){}
-    int get_cena()const {
+    ~Clanarina() {}
+    float get_cena()const {
         return cena;
     }
     DinString get_datumUplate()const {
         return datumUplate;
     }
-    int get_trajanje()const {
+    DinString get_trajanje()const {
         return trajanje;
     }
-    void set_cena(const int c) {
+    void set_cena(const float c) {
         cena = c;
     }
     void set_datumUplate(const DinString d) {
         datumUplate = d;
     }
-    void set_trajanje(const int t) {
+    void set_trajanje(const DinString t) {
         trajanje = t;
+    }
+    friend ostream& operator<<(ostream& out, const Clanarina& c){
+        out << "\n\tDatum uplate: "<<c.get_datumUplate()<<endl<<"\tClanarina Vam vazi do:"<<c.get_trajanje()<<endl<<"\tPlatili ste: "<<c.get_cena()<<" din."<<endl;
+        return out;
     }
 };
 
 class Kasa {
 private:
-    int profit;
-    int trosak;
-    ReklamniMaterijal reklamniM;
-    PlanTreninga planT;
-    Suplementi suplement;
-    Clanarina clanarina;
+    float profit;
+    float trosak;
+    List<ReklamniMaterijal> reklamniM;
+    List<PlanTreninga> planT;
+    List<Suplementi> suplement;
+    List<Clanarina> clanarina;
 public:
-    Kasa() : reklamniM(),planT(),suplement(),clanarina(){
+    Kasa() : reklamniM(), planT(), suplement(), clanarina() {
         profit = 100000;
         trosak = 30000;
     }
-    Kasa(int m,int t,int k,int kal,int ol,int kval,int c,int r,VRSTA_TRENINGA vt,int ce,VRSTA_SUPLEMENATA vs,int g,int cen,DinString dd,int traj,int p,int tr) : reklamniM(m,t,k,kal,ol),planT(kval,c,t,vt),suplement(ce,vs,g),clanarina(cen,dd,traj){
+    Kasa(float p, float tr,List<ReklamniMaterijal> r,List<PlanTreninga> pl,List<Suplementi> s,List<Clanarina> c) {
         profit = p;
         trosak = tr;
+        reklamniM = r;
+        planT = pl;
+        suplement = s;
+        clanarina = c;
     }
-    Kasa(const Kasa &k) : reklamniM(k.reklamniM),planT(k.planT),suplement(k.suplement),clanarina(k.clanarina){
+    Kasa(const Kasa& k) : reklamniM(k.reklamniM), planT(k.planT), suplement(k.suplement), clanarina(k.clanarina) {
         profit = k.profit;
         trosak = k.trosak;
     }
-    ~Kasa(){}
-    int get_profit()const{
+    ~Kasa() {}
+    List<ReklamniMaterijal> get_reklamni(){
+        return reklamniM;
+    }
+    List<PlanTreninga> get_planTreninga(){
+        return planT;
+    }
+    List<Suplementi> get_suplementi(){
+        return suplement;
+    }
+    List<Clanarina> get_clanarina(){
+        return clanarina;
+    }
+    float get_profit()const {
         return profit;
     }
-    int get_trosak()const{
+    float get_trosak()const {
         return trosak;
     }
-    int get_cenaClanarinaKasa()const{
-        return clanarina.get_cena();
-    }
-    DinString get_datumUplateKasa()const{
-        return clanarina.get_datumUplate();
-    }
-    int get_trajanjeClanarineKasa()const{
-        return clanarina.get_trajanje();
-    }
-    int get_cenaTreningaKasa()const{
-        return planT.get_cena();
-    }
-    int get_kvalitetTreningaKasa()const{
-        return planT.get_kvalitet();
-    }
-    int get_rokTreningaKasa()const{
-        return planT.get_rok();
-    }
-    VRSTA_TRENINGA get_vrstaTreningaKasa()const{
-        return planT.get_vrstaTreninga();
-    }
-    int get_majiceKasa()const{
-        return reklamniM.get_majice();
-    }
-    int get_trenerkeKasa()const{
-        return reklamniM.get_trenerke();
-    }
-    int get_kacketiKasa()const{
-        return reklamniM.get_kacketi();
-    }
-    int get_kalendariKasa()const{
-        return reklamniM.get_kalendari();
-    }
-    int get_olovkeKasa()const{
-        return reklamniM.get_olovke();
-    }
-    int get_cenaSuplemenataKasa()const{
-        return suplement.get_cena();
-    }
-    VRSTA_SUPLEMENATA get_vrstaSuplemenataKasa()const{
-        return suplement.get_suplement();
-    }
-    int get_brojSuplementKasa()const{
-        return suplement.get_broj();
-    }
-    void set_profit(const int p){
+
+    void set_profit(const float p) {
         profit = p;
     }
-    void set_trosak(const int t){
+    void set_trosak(const float t) {
         trosak = t;
     }
-    void set_cenaClanarineKasa(const int c){
-        clanarina.set_cena(c);
+    void set_reklamniMat(List<ReklamniMaterijal> rm)
+    {
+        reklamniM = rm;
     }
-    void set_datumUplateKasa(const DinString d){
-        clanarina.set_datumUplate(d);
+    void set_suplementi(List<Suplementi> sss){
+        suplement = sss;
     }
-    void set_trajanjeClanarineKasa(const int t){
-        clanarina.set_trajanje(t);
+    void set_planTreninga(List<PlanTreninga> pln){
+        planT = pln;
     }
-    void set_kvalitetTreningaKasa(const int k){
-        planT.set_kvalitet(k);
+    void set_clanrine(List<Clanarina> cla){
+        clanarina = cla;
     }
-    void set_cenaTreningaKasa(const int c){
-        planT.set_cena(c);
-    }
-    void set_rokTreningaKasa(const int r){
-        planT.set_rok(r);
-    }
-    void set_vrstaTreningaKasa(const VRSTA_TRENINGA v){
-        planT.set_vrstaTreninga(v);
-    }
-    void set_majiceKasa(const int m){
-        reklamniM.set_majice(m);
-    }
-    void set_trenerkeKasa(const int t){
-        reklamniM.set_trenerke(t);
-    }
-    void set_kacketiKasa(const int k){
-        reklamniM.set_kacketi(k);
-    }
-    void set_kalendariKasa(const int ka){
-        reklamniM.set_kalendari(ka);
-    }
-    void set_olovkeKasa(const int o){
-        reklamniM.set_olovke(o);
-    }
-    void set_cenaSuplemenataKasa(const int c){
-        suplement.set_cena(c);
-    }
-    void set_vrstaSuplementaKasa(const VRSTA_SUPLEMENATA v){
-        suplement.set_suplement(v);
-    }
-    void set_brojSuplemenataKasa(const int b){
-        suplement.set_broj(b);
-    }
-    bool prodajMajice(int brMajci){
-        if(reklamniM.get_majice() >= brMajci){
-            reklamniM.set_majice(reklamniM.get_majice() - brMajci);
-            return true;
-        }
-        return false;
-    }
-    bool prodajTrenerke(int brTrenerki){
-        if(reklamniM.get_trenerke() >= brTrenerki){
-            reklamniM.set_trenerke(reklamniM.get_trenerke() - brTrenerki);
-            return true;
-        }
-        return false;
-    }
-    bool prodajKalendare(int BrKalendara){
-        if(reklamniM.get_kalendari() >= BrKalendara){
-            reklamniM.set_kalendari(reklamniM.get_kalendari() - BrKalendara);
-            return true;
-        }
-        return false;
-    }
-    bool prodajKackete(int brKacketa){
-        if(reklamniM.get_kacketi() >= brKacketa){
-            reklamniM.set_kacketi(reklamniM.get_kacketi() - brKacketa);
-            return true;
-        }
-        else{return false;}
-
-    }
-    bool prodajOlovke(int BrOlovaka){
-        if(reklamniM.get_olovke() >= BrOlovaka){
-            reklamniM.set_olovke(reklamniM.get_olovke() - BrOlovaka);
-            return true;
-        }
-        else{return false;}
-    }
-
-    bool prodajSuplemente(VRSTA_SUPLEMENATA zeljeniProizvod,int br){
-        if(suplement.get_broj() > br && suplement.get_suplement() == zeljeniProizvod){
-            suplement.set_broj(suplement.get_broj() - br);
-            return true;
-        }
-        else{return false;}
-    }
-    Kasa& operator=(const Kasa &k){
+    Kasa& operator=(const Kasa& k) {
         profit = k.profit;
         trosak = k.trosak;
         planT = k.planT;
@@ -1252,38 +1105,33 @@ public:
         reklamniM = k.reklamniM;
         return *this;
     }
-    friend bool operator ==(Kasa& k1,Kasa& k2) {
-        if (k1.get_profit()!=k2.get_profit() || k1.get_trosak()!=k2.get_trosak()|| k1.get_brojSuplementKasa()!=k2.get_brojSuplementKasa() || k1.get_cenaClanarinaKasa()!=k2.get_cenaClanarinaKasa() ||
-            k1.get_cenaSuplemenataKasa()!=k2.get_cenaSuplemenataKasa() || k1.get_cenaTreningaKasa()!=k2.get_cenaTreningaKasa() || k1.get_datumUplateKasa()!=k2.get_datumUplateKasa() ||
-            k1.get_kacketiKasa()!=k2.get_kacketiKasa() || k1.get_kacketiKasa()!=k2.get_kacketiKasa() || k1.get_kalendariKasa()!=k2.get_kalendariKasa() ||
-            k1.get_kvalitetTreningaKasa()!=k2.get_kvalitetTreningaKasa() || k1.get_majiceKasa()!=k2.get_majiceKasa() || k1.get_olovkeKasa()!=k2.get_olovkeKasa() ||
-            k1.get_rokTreningaKasa()!=k2.get_rokTreningaKasa() || k1.get_trajanjeClanarineKasa()!=k2.get_trajanjeClanarineKasa() || k1.get_trenerkeKasa()!=k2.get_trenerkeKasa() ||
-            k1.get_vrstaSuplemenataKasa()!=k2.get_vrstaSuplemenataKasa() || k1.get_vrstaTreningaKasa()!=k2.get_vrstaTreningaKasa())
+    friend bool operator ==(Kasa& k1, Kasa& k2) {
+        if (k1.get_profit() != k2.get_profit() || k1.get_trosak() != k2.get_trosak())
         {
 
             return false;
         }
-        else{return true;}
+        else { return true; }
     }
-    friend bool operator!=(Kasa&k1,Kasa&k2){
-        if(k1 == k2){
+    friend bool operator!=(Kasa& k1, Kasa& k2) {
+        if (k1 == k2) {
             return false;
         }
-        else{return true;}
+        else { return true; }
     }
-    friend bool operator<(Kasa&k1,Kasa&k2){
-        if(k1.get_profit()<k2.get_profit()){
+    friend bool operator<(Kasa& k1, Kasa& k2) {
+        if (k1.get_profit() < k2.get_profit()) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    friend bool operator>(Kasa&k1,Kasa&k2){
-        if(k1.get_profit()>k2.get_profit()){
+    friend bool operator>(Kasa& k1, Kasa& k2) {
+        if (k1.get_profit() > k2.get_profit()) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
@@ -1291,83 +1139,86 @@ public:
 
 class Osoba {
 protected:
-    DinString ime,prezime,datumRodjenja,brTelefona;
+    DinString ime, prezime, datumRodjenja, brTelefona;
 public:
-    Osoba(){
+    Osoba() {
         ime = "luka";
         prezime = "obradovic";
         datumRodjenja = "24.5.2001.";
         brTelefona = "0605009000";
     }
-    Osoba(DinString i,DinString p,DinString dr,DinString b){
+    Osoba(DinString i, DinString p, DinString dr, DinString b) {
         ime = i;
         prezime = p;
         datumRodjenja = dr;
         brTelefona = b;
     }
-    Osoba(const Osoba &o){
+    Osoba(const Osoba& o) {
         ime = o.ime;
         prezime = o.prezime;
         datumRodjenja = o.datumRodjenja;
         brTelefona = o.brTelefona;
     }
-    ~Osoba(){}
-    DinString get_ime()const{
+    ~Osoba() {}
+    DinString get_ime()const {
         return ime;
     }
-    DinString get_prezime()const{
+    DinString get_prezime()const {
         return prezime;
     }
-    DinString get_datumRodjenja()const{
+    DinString get_datumRodjenja()const {
         return datumRodjenja;
     }
-    DinString get_brTelefona()const{
+    DinString get_brTelefona()const {
         return brTelefona;
     }
-    void set_ime(const DinString i){
+    void set_ime(const DinString i) {
         ime = i;
     }
-    void set_prezime(const DinString p){
+    void set_prezime(const DinString p) {
         prezime = p;
     }
-    void set_datumRodjenja(const DinString dr){
+    void set_datumRodjenja(const DinString dr) {
         datumRodjenja = dr;
     }
-    void set_brTelefona(const DinString b){
+    void set_brTelefona(const DinString b) {
         brTelefona = b;
     }
-    virtual void odradjenjiPoslovi(){}
+
 };
 class Clan : public Osoba {
-protected:
+private:
     int kodKartice;
     VRSTA_CLANA clan;
-    Clanarina clanarina;
+    List<Clanarina> clanarine;
     int brClanova;
 public:
-    Clan() : Osoba() , clanarina(){
+    Clan() : Osoba(),clanarine() {
         kodKartice = 123;
         clan = OBICAN;
         brClanova = 50;
     }
-    Clan(DinString i,DinString p,DinString dr,DinString b,int cena,DinString du,int tra,int k, VRSTA_CLANA c,int bc) : Osoba(i,p,dr,b) , clanarina(cena,du,tra){
+    Clan(DinString i, DinString p, DinString dr, DinString b, int k, VRSTA_CLANA c, int bc,List<Clanarina> cla) : Osoba(i, p, dr, b),clanarine(cla) {
         kodKartice = k;
         clan = c;
         brClanova = bc;
     }
-    Clan(const Clan& c) : Osoba((Osoba)c),clanarina(c.clanarina) {
+    Clan(const Clan& c) : Osoba((Osoba)c),clanarine(c.clanarine) {
         kodKartice = c.kodKartice;
         clan = c.clan;
         brClanova = c.brClanova;
     }
-    ~Clan(){}
+    ~Clan() {}
+    List<Clanarina> get_clanarine(){
+        return clanarine;
+    }
     int get_kodKartice()const {
         return kodKartice;
     }
     VRSTA_CLANA get_vrstaClana()const {
         return clan;
     }
-    int get_brClanova()const{
+    int get_brClanova()const {
         return brClanova;
     }
     void set_kodKartice(const int k) {
@@ -1376,42 +1227,60 @@ public:
     void set_vrstaClana(const VRSTA_CLANA c) {
         clan = c;
     }
-    void set_brClanoca(const int c){
+    void set_brClanoca(const int c) {
         brClanova = c;
     }
-    friend ostream& operator<<(ostream& out, const Clan& c){
-        if(c.brClanova > 0){
+    void set_clanarine(List<Clanarina> cla){
+        clanarine = cla;
+    }
+    friend ostream& operator<<(ostream& out,Clan& c) {
+        if ( c.get_brClanova() > 0) {
+
             out << "CLAN br.";
-            out << c.brClanova<<":"<<endl;
+            out << c.brClanova << ":" << endl;
             out << "\tIme:";
-            out << c.ime<<endl;
+            out << c.ime << endl;
             out << "\tPrezime:";
-            out << c.prezime<<endl;
+            out << c.prezime << endl;
             out << "\tDatum rodjenja:";
-            out << c.datumRodjenja<<endl;
+            out << c.datumRodjenja << endl;
             out << "\tBroj telefona:";
-            out << c.brTelefona<<endl;
-            out << "\tDatum uplate:";
-            out << c.clanarina.get_datumUplate()<<endl;
+            out << c.brTelefona << endl;
             out << "\tKod kartice:";
-            out << c.kodKartice<<endl;
+            out << c.kodKartice << endl;
             out << "\tTip clana:";
-            if(c.clan == OBICAN){
+            if (c.clan == OBICAN) {
                 out << "Svakodnevni";
             }
-            else if(c.clan == VIP){
+            else if (c.clan == VIP) {
                 out << "VIP";
             }
-            else{
+            else {
                 out << "Tip clana ne postoji.";
             }
-            out << "\nClanarina vazi ";
-            out << c.clanarina.get_trajanje();
-            out << " dana";
         }
-
         return  out;
     }
+    bool dodajClanarinu(Clanarina &c){
+        return clanarine.add(clanarine.size()+1,c);
+    }
+        void vidiClanarinu(){
+                    if(clanarine.size() == 0){
+                cout << "\nNemate clanarinu!"<<endl;
+            }
+            else{
+                Clanarina c;
+                cout << "CLANARINE      CLANARINE       CLANARINE";
+                cout << "\n====================================================================" << endl;
+                for(int i = 1;i <= clanarine.size();i++){
+                        clanarine.read(i,c);
+                        cout << "Clanarina za "<<i<<". clana:"<<c << endl;
+                        cout << "====================================================================" << endl;
+                    }
+            }
+        }
+
+
 
 };
 class Zaposleni : public Osoba {
@@ -1423,7 +1292,7 @@ public:
         brZaposleni = 5;
         zaposleni = TRENER;
     }
-    Zaposleni(DinString i,DinString p,DinString dr,DinString br,int b, ZAPOSLENI z) : Osoba(i,p,dr,br) {
+    Zaposleni(DinString i, DinString p, DinString dr, DinString br, int b, ZAPOSLENI z) : Osoba(i, p, dr, br) {
         brZaposleni = b;
         zaposleni = z;
     }
@@ -1431,7 +1300,7 @@ public:
         brZaposleni = z.brZaposleni;
         zaposleni = z.zaposleni;
     }
-    ~Zaposleni(){}
+    ~Zaposleni() {}
     int get_brZaposlenih()const {
         return brZaposleni;
     }
@@ -1444,40 +1313,40 @@ public:
     void set_zaposleni(const ZAPOSLENI s) {
         zaposleni = s;
     }
-    void odradjenjiPoslovi(ZAPOSLENI z){
-        if(z == TRENER){
-            cout << ",sefe, danas sam uradio 5 personalnih treninga."<<endl;
+    void odradjenjiPoslovi(ZAPOSLENI z) {
+        if (z == TRENER) {
+            cout << ",sefe, danas sam uradio 5 personalnih treninga." << endl;
         }
-        else if(z == CISTACICA){
-            cout << ",sefe, prostorije su sve ociscene."<<endl;
+        else if (z == CISTACICA) {
+            cout << ",sefe, prostorije su sve ociscene." << endl;
         }
-        else{
-            cout << ",sefe, posto vas danas nije bilo na poslu, da vam javim"<<endl<<"\tda je sve odradjeno danas kao i svaki drugi dan."<<endl;
+        else {
+            cout << ",sefe, posto vas danas nije bilo na poslu, da vam javim" << endl << "\tda je sve odradjeno danas kao i svaki drugi dan." << endl;
         }
     }
-    friend ostream& operator<<(ostream& out, const Zaposleni& z){
-        if(z.brZaposleni > 0){
+    friend ostream& operator<<(ostream& out, const Zaposleni& z) {
+        if (z.brZaposleni > 0) {
             out << "ZAPOSLENI br.";
-            out << z.brZaposleni<<":"<<endl;
+            out << z.brZaposleni << ":" << endl;
             out << "\tIme:";
-            out << z.ime<<endl;
+            out << z.ime << endl;
             out << "\tPrezime:";
-            out << z.prezime<<endl;
+            out << z.prezime << endl;
             out << "\tDatum rodjenja:";
-            out << z.datumRodjenja<<endl;
+            out << z.datumRodjenja << endl;
             out << "\tBroj telefona:";
-            out << z.brTelefona<<endl;
+            out << z.brTelefona << endl;
             out << "\tTip zaposlenog:";
-            if(z.zaposleni == CISTACICA){
+            if (z.zaposleni == CISTACICA) {
                 out << "Cistacica";
             }
-            else if(z.zaposleni == TRENER){
+            else if (z.zaposleni == TRENER) {
                 out << "Personalni trener";
             }
-            else if(z.zaposleni == POMOCNIK){
+            else if (z.zaposleni == POMOCNIK) {
                 out << "Desna ruka teretane";
             }
-            else{
+            else {
                 out << "Ovakav zaposleni ne postoji.";
             }
             Zaposleni z1;
@@ -1485,24 +1354,24 @@ public:
         }
         return out;
     }
-   /*
-    friend bool operator==(Zaposleni &z1,Zaposleni &z2){
-        if(z1.get_brTelefona()!=z2.get_brTelefona()){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    friend bool operator!=(Zaposleni &z1,Zaposleni &z2){
-        if(z1 == z2){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    */
+    /*
+     friend bool operator==(Zaposleni &z1,Zaposleni &z2){
+         if(z1.get_brTelefona()!=z2.get_brTelefona()){
+             return false;
+         }
+         else{
+             return true;
+         }
+     }
+     friend bool operator!=(Zaposleni &z1,Zaposleni &z2){
+         if(z1 == z2){
+             return false;
+         }
+         else{
+             return true;
+         }
+     }
+     */
 };
 
 class Teretana {
@@ -1517,173 +1386,85 @@ private:
     int maxClanova;
     DinString naziv;
 public:
-    Teretana() : kasa(),info(),inventar() {
+    Teretana() : kasa(), info(), inventar(),zaposlen(),clan() {
         cisto = true;
         maxZaposleni = 10;
         maxClanova = 200;
         naziv = "HERKUL";
     }
-    Teretana(int m,int t,int k,int kal,int ol,int kval,int c,int r,VRSTA_TRENINGA vt,int ce,VRSTA_SUPLEMENATA vs,int g,int cen,DinString dd,int traj,int p,int tr,GRAD gg, DinString u, int br, int prv, int krv, int kkk, int ttt, int v, DinString tel, DANI d,int pp, int kk, int mm,bool a,int mz,int mc,DinString nazi) : kasa(m,t,k,kal,ol,kval,c,r,vt,ce,vs,g,cen,dd,traj,p,tr),info(gg,u,br,prv,krv,kkk,ttt,v,tel,d),inventar(pp,kk,mm) {
+    Teretana(float p, float tr,List<ReklamniMaterijal> r,List<PlanTreninga> pl,List<Suplementi> s,List<Clanarina> c, GRAD gg, DinString u, int br, DinString prv, DinString krv, int kkk, int ttt, int v, DinString tel, DANI d, int pp, int kk, int mm,List<Oprema> opr,List<Prostorija> pro, bool a, int mz, int mc, DinString nazi,List<Zaposleni> zap,List<Clan> ccc) : kasa(p, tr,r,pl,s,c), info(gg, u, br, prv, krv, kkk, ttt, v, tel, d), inventar(pp, kk, mm,opr,pro),zaposlen(zap),clan(ccc) {
         cisto = a;
         maxZaposleni = mz;
         maxClanova = mc;
         naziv = nazi;
     }
-    Teretana(const Teretana &t) : kasa(t.kasa),info(t.info),inventar(t.inventar){
+    Teretana(const Teretana& t) : kasa(t.kasa), info(t.info), inventar(t.inventar),zaposlen(t.zaposlen),clan(t.clan) {
         cisto = t.cisto;
         maxZaposleni = t.maxZaposleni;
         maxClanova = t.maxClanova;
         naziv = t.naziv;
     }
-    ~Teretana(){}
-    Info& get_info(){
+    ~Teretana() {}
+    Info& get_info() {
         return info;
     }
-    Kasa& get_kasa(){
+    Kasa& get_kasa() {
         return kasa;
     }
-    Inventar& get_inventar(){
+    Inventar& get_inventar() {
         return inventar;
     }
-    List<Zaposleni>& get_zaposleni(){
+    List<Zaposleni>& get_zaposleni() {
         return zaposlen;
     }
-    List<Clan>& get_clan(){
+    List<Clan>& get_clan() {
         return clan;
     }
-    DinString get_naziv()const{
+    DinString get_naziv()const {
         return naziv;
     }
-    bool get_cisto()const{
+    bool get_cisto()const {
 
         return cisto;
     }
-    int get_maxZaposleni()const{
+    int get_maxZaposleni()const {
         return maxZaposleni;
     }
-    int get_maxClanovi()const{
+    int get_maxClanovi()const {
         return maxClanova;
     }
-    void set_cisto(const bool c){
+    void set_cisto(const bool c) {
         cisto = c;
     }
-    void set_maxZaposleni(const int z){
+    void set_maxZaposleni(const int z) {
         maxZaposleni = z;
     }
-    void set_maxClanovi(const int h){
+    void set_maxClanovi(const int h) {
         maxClanova = h;
     }
-    void set_naziv(const DinString n){
+    void set_naziv(const DinString n) {
         naziv = n;
     }
 
-    int get_profitTrt()const{
+    int get_profitTrt()const {
         return kasa.get_profit();
     }
-    int get_trosakTrt()const{
+    int get_trosakTrt()const {
         return kasa.get_trosak();
     }
-    int get_cenaClanarinaTrt()const{
-        return kasa.get_cenaClanarinaKasa();
-    }
-    DinString get_datumUplateTrt()const{
-        return kasa.get_datumUplateKasa();
-    }
-    int get_trajanjeClanarineTrt()const{
-        return kasa.get_trajanjeClanarineKasa();
-    }
-    int get_cenaTreningaTrt()const{
-        return kasa.get_cenaTreningaKasa();
-    }
-    int get_kvalitetTreningaTrt()const{
-        return kasa.get_kvalitetTreningaKasa();
-    }
-    int get_rokTreningaTrt()const{
-        return kasa.get_rokTreningaKasa();
-    }
-    VRSTA_TRENINGA get_vrstaTreningaTrt()const{
-        return kasa.get_vrstaTreningaKasa();
-    }
-    int get_majiceTrt()const{
-        return kasa.get_majiceKasa();
-    }
-    int get_trenerkeTrt()const{
-        return kasa.get_trenerkeKasa();
-    }
-    int get_kacketiTrt()const{
-        return kasa.get_kacketiKasa();
-    }
-    int get_kalendariTrt()const{
-        return kasa.get_kalendariKasa();
-    }
-    int get_olovkeTrt()const{
-        return kasa.get_olovkeKasa();
-    }
-    int get_cenaSuplemenataTrt()const{
-        return kasa.get_cenaSuplemenataKasa();
-    }
-    VRSTA_SUPLEMENATA get_vrstaSuplemenataTrt()const{
-        return kasa.get_vrstaSuplemenataKasa();
-    }
-    int get_brojSuplementTrt()const{
-        return kasa.get_brojSuplementKasa();
-    }
-    void set_profitTrt(const int p){
+
+
+    void set_profitTrt(const float p) {
         kasa.set_profit(p);
     }
-    void set_trosakTrt(const int t){
+    void set_trosakTrt(const float t) {
         kasa.set_trosak(t);
     }
-    void set_cenaClanarineTrt(const int c){
-        kasa.set_cenaClanarineKasa(c);
-    }
-    void set_datumUplateTrt(const DinString d){
-        kasa.set_datumUplateKasa(d);
-    }
-    void set_trajanjeClanarineTrt(const int t){
-        kasa.set_trajanjeClanarineKasa(t);
-    }
-    void set_kvalitetTreningaTrt(const int k){
-        kasa.set_kvalitetTreningaKasa(k);
-    }
-    void set_cenaTreningaTrt(const int c){
-        kasa.set_cenaTreningaKasa(c);
-    }
-    void set_rokTreningaTrt(const int r){
-        kasa.set_rokTreningaKasa(r);
-    }
-    void set_vrstaTreningaTrt(const VRSTA_TRENINGA v){
-        kasa.set_vrstaTreningaKasa(v);
-    }
-    void set_majiceTrt(const int m){
-        kasa.set_majiceKasa(m);
-    }
-    void set_trenerkeTrt(const int t){
-        kasa.set_trenerkeKasa(t);
-    }
-    void set_kacketiTrt(const int k){
-        kasa.set_kacketiKasa(k);
-    }
-    void set_kalendariTrt(const int ka){
-        kasa.set_kalendariKasa(ka);
-    }
-    void set_olovkeTrt(const int o){
-        kasa.set_olovkeKasa(o);
-    }
-    void set_cenaSuplemenataTrt(const int c){
-        kasa.set_cenaSuplemenataKasa(c);
-    }
-    void set_vrstaSuplementaTrt(const VRSTA_SUPLEMENATA v){
-        kasa.set_vrstaSuplementaKasa(v);
-    }
-    void set_brojSuplemenataTrt(const int b){
-            kasa.set_brojSuplemenataKasa(b);
-    }
 
-    int get_pocetakRadnoVremenaTrt()const {
+    DinString get_pocetakRadnoVremenaTrt()const {
         return info.get_pocetakRadnoVremenaInfo();
     }
-    int get_krajkRadnoVremenaTrt()const{
+    DinString get_krajkRadnoVremenaTrt()const {
         return info.get_krajkRadnoVremenaInfo();
     }
     DANI get_danTrt()const {
@@ -1734,10 +1515,10 @@ public:
     void set_telefonTrt(const DinString tel) {
         info.set_telefon(tel);
     }
-    void set_pocetakRadnoVremenaTrt(const int p){
+    void set_pocetakRadnoVremenaTrt(const DinString p) {
         info.set_pocetakRadnoVremenaInfo(p);
     }
-    void set_krajRadnoVremenaTrt(const int k){
+    void set_krajRadnoVremenaTrt(const DinString k) {
         info.set_krajRadnoVremenaInfo(k);
     }
 
@@ -1760,58 +1541,58 @@ public:
         inventar.set_maxBrojPredmeta(br);
     }
 
-    bool dodajClana(const Clan &c){
-        if(clan.size() < maxClanova){
-            return clan.add(clan.size()+1,c);
+    bool dodajClana(const Clan& c) {
+        if (clan.size() < maxClanova) {
+            return clan.add(clan.size() + 1, c);
         }
-        else{
-           return false;
+        else {
+            return false;
         }
     }
 
-    void popisClanova(){
-        if(clan.size() == 0){
-            cout << "nemate clanova u teretani"<<endl;
+    void popisClanova() {
+        if (clan.size() == 0) {
+            cout << "nemate clanova u teretani" << endl;
         }
-        else{
+        else {
             Clan c;
-            cout << "\t    CLANOVI\t    CLANOVI\t    CLANOVI"<<endl;
+            cout << "\t    CLANOVI\t    CLANOVI\t    CLANOVI" << endl;
             cout << "====================================================================" << endl;
-            for(int i = 1; i <= clan.size();i++){
-                clan.read(i,c);
+            for (int i = 1; i <= clan.size(); i++) {
+                clan.read(i, c);
                 cout << c << endl;
                 cout << "====================================================================" << endl;
             }
         }
     }
-    bool zaposliOsobu(const Zaposleni &z){
-        if(zaposlen.size() < maxZaposleni){
-           return zaposlen.add(zaposlen.size()+1,z);
+    bool zaposliOsobu(const Zaposleni& z) {
+        if (zaposlen.size() < maxZaposleni) {
+            return zaposlen.add(zaposlen.size() + 1, z);
         }
-        else{
-           return false;
+        else {
+            return false;
         }
     }
-    void vidiStanjeZaposlenih(){
-        if(zaposlen.size()==0){
-            cout << "niste jos nikoga zaposlili."<<endl;
+    void vidiStanjeZaposlenih() {
+        if (zaposlen.size() == 0) {
+            cout << "niste jos nikoga zaposlili." << endl;
         }
-        else{
+        else {
             Zaposleni zz;
             cout << "\t   ZAPOSLENI\t  ZAPOSLENI\t   ZAPOSLENI";
             cout << "\n====================================================================" << endl;
-            for(int i = 1;i <= zaposlen.size();i++){
-                zaposlen.read(i,zz);
+            for (int i = 1; i <= zaposlen.size(); i++) {
+                zaposlen.read(i, zz);
                 cout << zz << endl;
                 cout << "====================================================================" << endl;
             }
         }
     }
-    friend ostream& operator<<(ostream& out, const Teretana& t){
+    friend ostream& operator<<(ostream& out, const Teretana& t) {
         out << t.get_naziv();
         return out;
     }
-    Teretana& operator=(const Teretana &t){
+    Teretana& operator=(const Teretana& t) {
         kasa = t.kasa;
         info = t.info;
         inventar = t.inventar;
@@ -1823,36 +1604,36 @@ public:
         naziv = t.naziv;
         return *this;
     }
-    friend bool operator==(Teretana &t1,Teretana &t2){
-        if(t1.get_kasa()!=t2.get_kasa() || t1.get_info()!=t2.get_info() || t1.get_inventar()!=t2.get_inventar() ||
-           t1.get_cisto()!=t2.get_cisto() ||t1.get_maxZaposleni()!=t2.get_maxZaposleni() || t1.get_maxClanovi()!=t2.get_maxClanovi() ||
-           t1.get_naziv()!=t2.get_naziv()){
+    friend bool operator==(Teretana& t1, Teretana& t2) {
+        if (t1.get_kasa() != t2.get_kasa() || t1.get_info() != t2.get_info() || t1.get_inventar() != t2.get_inventar() ||
+            t1.get_cisto() != t2.get_cisto() || t1.get_maxZaposleni() != t2.get_maxZaposleni() || t1.get_maxClanovi() != t2.get_maxClanovi() ||
+            t1.get_naziv() != t2.get_naziv()) {
 
             return false;
         }
         return true;
     }
-    friend bool operator!=(Teretana &t1,Teretana &t2){
-        if(t1 == t2){
+    friend bool operator!=(Teretana& t1, Teretana& t2) {
+        if (t1 == t2) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    friend bool operator<(Teretana &t1,Teretana &t2){
-        if(t1.get_velicinaTrt() < t2.get_velicinaTrt()){
+    friend bool operator<(Teretana& t1, Teretana& t2) {
+        if (t1.get_velicinaTrt() < t2.get_velicinaTrt()) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    friend bool operator>(Teretana &t1,Teretana &t2){
-        if(t1.get_velicinaTrt() > t2.get_velicinaTrt()){
+    friend bool operator>(Teretana& t1, Teretana& t2) {
+        if (t1.get_velicinaTrt() > t2.get_velicinaTrt()) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
@@ -1861,36 +1642,30 @@ public:
 int main()
 {
     Teretana tr;
-    cout <<"\t"<<tr.get_naziv()<<"\t"<<tr.get_naziv()<<"\t"<<tr.get_naziv()<<"\t"<<tr.get_naziv()<<"\t"<<tr.get_naziv()<<"\t"<<tr.get_naziv()<<"\t"<<tr.get_naziv()<<endl;
+    cout << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << endl;
     //List<Oprema> opreme;
-    Oprema o1(5, SIPKA, 60, 75, RUKE, ODLICNO, 20, 90, STRUNJACA, 2, 40, 80);
-    Oprema o2(10, BUCICA, 65, 85, RAME, LOSE, 25, 90, LOPTA, 3, 45, 75);
+    Oprema o1(80, 150);
     /*  opreme.add(1, o1);
       opreme.add(2, o2);
-
       Oprema o;
       for (int i = 1; i <= opreme.size(); i++) {
           opreme.read(i, o);
-
           cout << "\n\n\n\t\tOPREMA BR. " << i << " JESTE SLEDECA:\n" << o << endl;
       };
 */
     Inventar i;
     cout << "====================================================================" << endl;
     i.kupiOpremu(o1);
-    i.kupiOpremu(o2);
     i.vidiOpremu();
 
-    List<Prostorija> prostorija;
-    Prostorija p1(10, 20, SAJLA, OSVEZIVAC, 10, 3, 5, 5, 15, 3, 15, 3, true);
-    Prostorija p2(20, 25, TEG, SPREJ, 9, 2, 4, 4, 14, 2, 14, 2, false);
+    Prostorija prostorija;
+    Prostorija p1(40);
 
     i.kupiStvari(p1);
-    i.kupiStvari(p2);
     i.vidiStanjeProstorija();
 
     RadnoVreme r();
-    RadnoVreme r1(10, 22);
+    RadnoVreme r1("10:00:00AM","22:00:00PM");
     RadnoVreme r2(r1);
 
     Adresa a();
@@ -1898,45 +1673,47 @@ int main()
     Adresa a2(a1);
 
     Info i3();
-    Info i1(SRBOBRAN, "Sveti Sava", 4, 10, 22, 25, 3, 50, "0613150983", RADNI_DAN_I_SUBOTA);
+    Info i1(SRBOBRAN, "Sveti Sava", 4, "10:00:00AM","22:00:00PM", 25, 3, 50, "0613150983", RADNI_DAN_I_SUBOTA);
     Info i2(i1);
     Info in;
     in.vidiRadnoVreme();
 
     Ostava ostava();
-    Ostava ostava1(50, 20, SAJLA, OSVEZIVAC);
+    Ostava ostava1(50, 20, SAJLA, OSVEZIVAC,40);
     Ostava ostava2(ostava1);
 
     Svlacionica s();
-    Svlacionica s1(10, 5, 10, 3, true);
+    Svlacionica s1(10, 5, 10, 3, true,40);
     Svlacionica s2(s1);
 
     Kupatilo k();
-    Kupatilo k1(7, 2, 3, 3);
+    Kupatilo k1(7, 2, 3, 3,40);
     Kupatilo k2(k1);
 
     Prostorija pr();
-    Prostorija pr1(50, 20, SAJLA, OSVEZIVAC, 7, 2, 3, 3, 10, 5, 10, 3, true);
+    Prostorija pr1(40);
     Prostorija pr2(pr1);
 
     Tegovi t();
-    Tegovi t1(20, SIPKA, 60, 75);
+    Tegovi t1(20, SIPKA, 60, 75,80,150);
     Tegovi t2(t1);
 
     Sprava spr();
-    Sprava spr1(RUKE, ODLICNO, 20, 90);
+    Sprava spr1(RUKE, ODLICNO,90,80,150);
     Sprava spr2(spr1);
 
     FitnesOprema f();
-    FitnesOprema f1(STRUNJACA, 2, 40, 80);
+    FitnesOprema f1(STRUNJACA, 2, 40, 80,"1.1.2020","1.1.2021",80,150);
     FitnesOprema f2(f1);
 
     Oprema o();
-    Oprema o3(20, SIPKA, 60, 75, RUKE, ODLICNO, 20, 90, STRUNJACA, 2, 40, 80);
+    Oprema o3(75,140);
     Oprema o4(o3);
 
+    List<Oprema> opr;
+    List<Prostorija> pro;
     Inventar ii();
-    Inventar ii1(10, 400, 400);
+    Inventar ii1(10, 400, 400,opr,pro);
     Inventar ii2(ii1);
 
     ReklamniMaterijal rm();
@@ -1948,61 +1725,76 @@ int main()
     PlanTreninga pt2(pt1);
 
     Suplementi sup();
-    Suplementi sup1(150, PROTEIN,1000);
+    Suplementi sup1(150, PROTEIN);
     Suplementi sup2(sup1);
 
     Clanarina c4();
-    Clanarina c2(2000, "1.4.2020.", 30);
+    Clanarina c2(2000, "1.4.2020.", "2.4.2020");
+    Clanarina c5(3000, "4.1.2020.", "4.2.2020");
     Clanarina c3(c2);
 
     Osoba os();
-    Osoba os1("Marko","Milosevic","10.10.2001.","0615019011");
+    Osoba os1("Marko", "Milosevic", "10.10.2001.", "0615019011");
     Osoba os2(os1);
 
+    List<Clanarina> cla;
     Clan cl2();
-    Clan cl3("Luka","Obradovic","12.12.2001.","0605009000",2000,"1.3.2020.",30,123, OBICAN,1);
-    Clan cl4("Milos","Markovic","11.11.2000.","0605007800",2000,"1.5.2020.",30,444, VIP,2);
+    Clan cl3("Luka", "Obradovic", "12.12.2001.", "0605009000",123, OBICAN, 1,cla);
+    Clan cl4("Milos", "Markovic", "11.11.2000.", "0605007800",444, VIP, 2,cla);
     Clan cl5(cl3);
+    Clan cl;
+
 
     Zaposleni z();
-    Zaposleni z1("Todor","Todorovic","12.12.2001.","0635039033",1,POMOCNIK);
+    Zaposleni z1("Todor", "Todorovic", "12.12.2001.", "0635039033", 1, POMOCNIK);
+    Zaposleni z3("Rajko", "Mihajlovic", "6.3.1999.", "0605539333", 2, TRENER);
     Zaposleni z2(z1);
 
+    List<ReklamniMaterijal> ra;
+    List<PlanTreninga> pla;
+    List<Suplementi> sa;
+    List<Clanarina> ca;
     Kasa ka();
-    Kasa ka1(50,50,20,25,80,90,20000,40,FITNES,150,PROTEIN,1000,2000,"3.3.2020",30,100000,30000);
+    Kasa ka1(50, 50,ra,pla,sa,ca);
     Kasa ka2(ka1);
 
+    List<Zaposleni> zap;
+    List<Clan> ccc;
     Teretana ter();
-    Teretana ter1(50,50,20,25,80,90,20000,40,FITNES,150,PROTEIN,1000,2000,"3.3.2020",30,100000,30000,SRBOBRAN, "Sveti Sava", 4, 10, 22, 25, 3, 50, "0613150983", RADNI_DAN_I_SUBOTA,10, 400, 400,true,10,200,"HERKUL");
-    Teretana ter5(55,55,25,30,90,95,20000,45,BODYWEIGHT,150,KREATIN,1000,2500,"5.4.2020",30,120000,40000,NOVI_SAD, "Sveti Nikola", 6, 10, 22, 30, 4, 55, "0623150983", PRAZNICI,15, 500, 500,true,15,250,"APOLON");
+    Teretana ter1(50, 50,ra,pla,sa,ca,SRBOBRAN, "Sveti Sava", 4, "10:00:00AM","22:00:00PM", 25, 3, 50, "0613150983", RADNI_DAN_I_SUBOTA, 10, 400, 400,opr,pro, true, 10, 200, "HERKUL",zap,ccc);
+    Teretana ter5(55, 55,ra,pla,sa,ca,NOVI_SAD, "Sveti Nikola", 6, "10:00:00AM","22:00:00PM", 30, 4, 55, "0623150983", PRAZNICI, 15, 500, 500,opr,pro, true, 15, 250, "APOLON",zap,ccc);
     Teretana ter2(ter1);
     tr.dodajClana(cl3);
     tr.dodajClana(cl4);
     tr.popisClanova();
+    cl.dodajClanarinu(c2);
+    cl.dodajClanarinu(c5);
+    cl.vidiClanarinu();
     tr.zaposliOsobu(z1);
+    tr.zaposliOsobu(z3);
     tr.vidiStanjeZaposlenih();
-    if(ter1 != ter5){
-        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << " su iste."<<endl;
+    if (ter1 != ter5) {
+        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << " su iste." << endl;
     }
-    else{
-        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << "' nisu iste."<<endl;
+    else {
+        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << "' nisu iste." << endl;
     }
 
-    if(ter1 < ter5){
+    if (ter1 < ter5) {
         cout << "teretana '" << ter1 << "' je manja od '" << ter5 << "' teretane." << endl;
     }
-    else if(ter1 > ter5){
+    else if (ter1 > ter5) {
         cout << "teretana '" << ter1 << "' je veca od '" << ter5 << "' teretane." << endl;
     }
-    else{
-        cout << "teretane '" << ter1 << "' i '"<< ter5 << " su iste povrsine."<<endl;
+    else {
+        cout << "teretane '" << ter1 << "' i '" << ter5 << " su iste povrsine." << endl;
     }
     ter5 = ter1;
-    if(ter1 == ter5){
-           cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << " su iste."<<endl;
+    if (ter1 == ter5) {
+        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << " su iste." << endl;
     }
-    else{
-        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << "' nisu iste."<<endl;
+    else {
+        cout << "Dve teretane koje ste uporedili: '" << ter1 << "'  i  '" << ter5 << "' nisu iste." << endl;
     }
 
 }

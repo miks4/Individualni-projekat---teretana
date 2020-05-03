@@ -1,28 +1,28 @@
 #include <iostream>
-
+#include "Prostorija.hpp"
 using namespace std;
 enum REZERVNI_DEO { SAJLA = 1, POMOCNA_SIPKA, TEG, SUNDJER };
 enum SREDSTVO_ZA_HIGIJENU { OSVEZIVAC = 1, KRPA, SPREJ };
-class Ostava {
+class Ostava : public Prostorija{
 protected:
     int rezervniDelovi;
     int higijenskaredstva;
     REZERVNI_DEO tipRezervnogDela;
     SREDSTVO_ZA_HIGIJENU tipHigijenskogSredstva;
 public:
-    Ostava() {
+    Ostava() : Prostorija(){
         rezervniDelovi = 50;
         higijenskaredstva = 20;
         tipRezervnogDela = SAJLA;
         tipHigijenskogSredstva = SPREJ;
     }
-    Ostava(int d, int s, REZERVNI_DEO r, SREDSTVO_ZA_HIGIJENU h) {
+    Ostava(int d, int s, REZERVNI_DEO r, SREDSTVO_ZA_HIGIJENU h,int pr) : Prostorija(pr) {
         rezervniDelovi = d;
         higijenskaredstva = s;
         tipRezervnogDela = r;
         tipHigijenskogSredstva = h;
     }
-    Ostava(const Ostava& o) {
+    Ostava(const Ostava& o) : Prostorija((Prostorija)o) {
         rezervniDelovi = o.rezervniDelovi;
         higijenskaredstva = o.higijenskaredstva;
         tipRezervnogDela = o.tipRezervnogDela;
@@ -53,6 +53,34 @@ public:
     void set_tipSredstvoZaHigijenu(const SREDSTVO_ZA_HIGIJENU h) {
         tipHigijenskogSredstva = h;
     }
-};
+    DinString vratiTip(){
 
+        if(tipHigijenskogSredstva == OSVEZIVAC){
+            return " Osvezivac.";
+        }
+        else if(tipHigijenskogSredstva == KRPA){
+            return " Krpa.";
+        }
+        else{
+            return " Sprej.";
+        }
+    }
+    DinString vratiTip2(){
+        if(tipRezervnogDela == TEG){
+            return " Teg.";
+        }
+        else if(tipRezervnogDela == SAJLA){
+            return " Sajla.";
+        }
+        else if(tipRezervnogDela == POMOCNA_SIPKA){
+            return " Sipka.";
+        }
+        else{
+            return " Sundjer.";
+        }
+    }
+    int vratiBroj(){
+        return higijenskaredstva + rezervniDelovi;
+    }
+};
 #endif

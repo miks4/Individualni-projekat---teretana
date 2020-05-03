@@ -43,4 +43,5 @@ public:
         ulicniBr = br;
     }
 };
+
 #endif

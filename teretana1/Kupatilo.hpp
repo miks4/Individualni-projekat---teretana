@@ -1,26 +1,26 @@
 #include <iostream>
-
+#include "Prostorija.hpp"
 using namespace std;
-class Kupatilo {
+class Kupatilo : public Prostorija {
 protected:
     int pisoar;
     int tusKabina;
     int umivaonik;
     int ogledala;
 public:
-    Kupatilo() {
+    Kupatilo() : Prostorija() {
         pisoar = 7;
         tusKabina = 2;
         umivaonik = 3;
         ogledala = 3;
     }
-    Kupatilo(int p, int t, int u, int o) {
+    Kupatilo(int p, int t, int u, int o,int pr) : Prostorija(pr) {
         pisoar = p;
         tusKabina = t;
         umivaonik = u;
         ogledala = o;
     }
-    Kupatilo(const Kupatilo& k) {
+    Kupatilo(const Kupatilo& k) : Prostorija((Prostorija)k) {
         pisoar = k.pisoar;
         tusKabina = k.tusKabina;
         umivaonik = k.umivaonik;
@@ -50,6 +50,9 @@ public:
     }
     void set_ogledalo(const int o) {
         ogledala = o;
+    }
+    int vratiBroj(){
+        return tusKabina + umivaonik + ogledala + pisoar;
     }
 };
 

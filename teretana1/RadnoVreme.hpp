@@ -1,17 +1,18 @@
 #include <iostream>
-
+#include "dinstring.hpp"
 using namespace std;
 class RadnoVreme {
+
 private:
-    int krajRadnogVremena;
-    int pocetakRadnogVremena;
+    DinString krajRadnogVremena;
+    DinString pocetakRadnogVremena;
 
 public:
     RadnoVreme() {
-        krajRadnogVremena = 22;
-        pocetakRadnogVremena = 10;
+        krajRadnogVremena = "10:00:00AM";
+        pocetakRadnogVremena = "22:00:00PM";
     }
-    RadnoVreme(int k, int p) {
+    RadnoVreme(DinString k,DinString p) {
         krajRadnogVremena = k;
         pocetakRadnogVremena = p;
     }
@@ -20,28 +21,19 @@ public:
         krajRadnogVremena = k.pocetakRadnogVremena;
     }
     ~RadnoVreme() {}
-    int get_kraj()const {
+    DinString get_kraj()const {
         return krajRadnogVremena;
     }
-    int get_pocetak()const {
+    DinString get_pocetak()const {
         return pocetakRadnogVremena;
     }
-    void set_kraj(const int k) {
+    void set_kraj(const DinString k) {
         krajRadnogVremena = k;
     }
-    void set_pocetak(const int p) {
+    void set_pocetak(const DinString p) {
         pocetakRadnogVremena = p;
     }
-    bool otvoreno(int v) {
-        if ((v > pocetakRadnogVremena) && (v < krajRadnogVremena)) {
-            return true;
-        }
-        return false;
-    }
-    int trajanjeRadnogVremena() {
-        int t = krajRadnogVremena - pocetakRadnogVremena;
-        return t;
-    }
+
 
 };
 #endif
