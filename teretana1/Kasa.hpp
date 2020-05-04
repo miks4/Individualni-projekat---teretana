@@ -8,8 +8,8 @@ using namespace std;
 
 class Kasa {
 private:
-    float profit;
-    float trosak;
+    double profit;
+    double trosak;
     List<ReklamniMaterijal> reklamniM;
     List<PlanTreninga> planT;
     List<Suplementi> suplement;
@@ -19,7 +19,7 @@ public:
         profit = 100000;
         trosak = 30000;
     }
-    Kasa(float p, float tr,List<ReklamniMaterijal> r,List<PlanTreninga> pl,List<Suplementi> s,List<Clanarina> c) {
+    Kasa(double p, double tr,List<ReklamniMaterijal> r,List<PlanTreninga> pl,List<Suplementi> s,List<Clanarina> c) {
         profit = p;
         trosak = tr;
         reklamniM = r;
@@ -44,17 +44,17 @@ public:
     List<Clanarina> get_clanarina(){
         return clanarina;
     }
-    float get_profit()const {
+    double get_profit()const {
         return profit;
     }
-    float get_trosak()const {
+    double get_trosak()const {
         return trosak;
     }
 
-    void set_profit(const float p) {
+    void set_profit(const double p) {
         profit = p;
     }
-    void set_trosak(const float t) {
+    void set_trosak(const double t) {
         trosak = t;
     }
     void set_reklamniMat(List<ReklamniMaterijal> rm)
@@ -110,4 +110,5 @@ public:
         }
     }
 };
+
 #endif

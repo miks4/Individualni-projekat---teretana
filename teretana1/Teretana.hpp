@@ -26,7 +26,7 @@ public:
         maxClanova = 200;
         naziv = "HERKUL";
     }
-    Teretana(float p, float tr,List<ReklamniMaterijal> r,List<PlanTreninga> pl,List<Suplementi> s,List<Clanarina> c, GRAD gg, DinString u, int br, DinString prv, DinString krv, int kkk, int ttt, int v, DinString tel, DANI d, int pp, int kk, int mm,List<Oprema> opr,List<Prostorija> pro, bool a, int mz, int mc, DinString nazi,List<Zaposleni> zap,List<Clan> ccc) : kasa(p, tr,r,pl,s,c), info(gg, u, br, prv, krv, kkk, ttt, v, tel, d), inventar(pp, kk, mm,opr,pro),zaposlen(zap),clan(ccc) {
+    Teretana(double p, double tr,List<ReklamniMaterijal> r,List<PlanTreninga> pl,List<Suplementi> s,List<Clanarina> c, GRAD gg, DinString u, int br, DinString prv, DinString krv, int kkk, int ttt, int v, DinString tel, DANI d, int pp, int kk, int mm,List<Oprema> opr,List<Prostorija> pro, bool a, int mz, int mc, DinString nazi,List<Zaposleni> zap,List<Clan> ccc) : kasa(p, tr,r,pl,s,c), info(gg, u, br, prv, krv, kkk, ttt, v, tel, d), inventar(pp, kk, mm,opr,pro),zaposlen(zap),clan(ccc) {
         cisto = a;
         maxZaposleni = mz;
         maxClanova = mc;
@@ -80,18 +80,18 @@ public:
         naziv = n;
     }
 
-    int get_profitTrt()const {
+    double get_profitTrt()const {
         return kasa.get_profit();
     }
-    int get_trosakTrt()const {
+    double get_trosakTrt()const {
         return kasa.get_trosak();
     }
 
 
-    void set_profitTrt(const float p) {
+    void set_profitTrt(const double p) {
         kasa.set_profit(p);
     }
-    void set_trosakTrt(const float t) {
+    void set_trosakTrt(const double t) {
         kasa.set_trosak(t);
     }
 
