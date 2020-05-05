@@ -72,16 +72,26 @@ public:
         }
         else {
             Oprema o;
-            Tegovi t;
-            Sprava s;
-            FitnesOprema f;
+            Oprema *o1;
+            Oprema *o2;
+            Oprema *o3;
+            Tegovi tegic(5,BUCICA,30,70,40,60);
+            Sprava spravica(RUKE,ODLICNO,60,30,80);
+            FitnesOprema fitneska(STRUNJACA,2,40,80,"1.1.2020","1.1.2021",40,80);
+            o1 = &tegic;
+            o2 = &spravica;
+            o3 = &fitneska;
             cout << "    SPISAK OPREME      SPISAK OPREME       SPISAK OPREME" << endl;
             cout << "====================================================================" << endl;
             for (int i = 1; i <= oprema.size(); i++) {
-                oprema.read(i, o);
-                cout << "Broj tegova:"<<t.get_brTegova()<<", vrsta:"<<t.vratiTip()<<endl;
-                cout << "Broj sprava: 20"<<", vrsta:"<<s.vratiTip()<<endl;
-                cout << "Broj fitnes opreme:"<<f.get_brFitnesOpreme()<<", vrsta:"<<f.vratiTip()<<endl;
+                    oprema.read(i,o);
+                cout << "Broj opreme: " << o.get_kvantitet()<<endl<<"kvalitet opreme: "<< o.get_kvalitet()<<endl;
+                oprema.read(i, *o1);
+                cout << "Vrsta tega: "<< o1->vratiTip()<<endl;
+                oprema.read(i, *o2);
+                cout << "Vrsta sprave: " << o2->vratiTip()<<endl;
+                oprema.read(i, *o2);
+                cout << "Vrsta fitnes opreme: " << o3->vratiTip()<<endl;
                 cout << "====================================================================" << endl;
             }
         }
@@ -98,16 +108,24 @@ public:
         }
         else {
             Prostorija p;
-            Ostava o;
-            Svlacionica s;
-            Kupatilo k;
+            Ostava o(30,40,SAJLA,OSVEZIVAC,50);
+            Svlacionica s(3,5,5,2,true,50);
+            Kupatilo k(5,3,5,5,50);
+            Prostorija *p1 = &o;
+            Prostorija *p2 = &s;
+            Prostorija *p3 = &k;
             cout << " PREGLED PROSTORIJA     PREGLED PROSTORIJA      PREGLED PROSTORIJA" << endl;
             cout << "====================================================================" << endl;
             for (int i = 1; i <= prostorija.size(); i++) {
-                prostorija.read(i, p);
-                cout << "OSTAVA"<< endl<< "ukupno predmeta:" << o.vratiBroj() <<endl<<"tip 1.prdmeta:" << o.vratiTip()<<endl<<"tip 2. predmeta"<<o.vratiTip2()<<endl;
-                cout << "SVLACIONICA"<< endl<< "ukupno predmeta:" << s.vratiBroj()<<endl;
-                cout << "KUPATILO"<< endl<< "ukupno predmeta:" << k.vratiBroj() <<endl;
+                cout << "OSTAVA:"<<endl;
+                prostorija.read(i, *p1);
+                cout << "\tTip pomocnog predmeta: " <<p1->vratiTip() << endl<<"\tTip dezinfikaciong sredstva: " <<p1->vratiTip2() << endl<<"\tIma ih ukupno: " <<p1->vratiBroj()<<endl;
+                prostorija.read(i, *p2);
+                cout << "SVLACIONICA:"<<endl;
+                cout << "\tBroj stvari u svlacionici(ormarici,klupe,cipleranik,civiluci) :" << p2->vratiBroj()<<endl;
+                cout << "KUPATILO:" <<endl;
+                prostorija.read(i, *p3);
+                cout << "\tBroj stvari u kupatilu(ogledala,umivaonici,pisoari i tus kabine) :" << p3->vratiBroj()<<endl;
                 cout << "====================================================================" << endl;
             }
         }

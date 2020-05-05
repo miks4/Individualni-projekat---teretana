@@ -27,8 +27,8 @@ int main()
 {
     Teretana tr;
     cout << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << "\t" << tr.get_naziv() << endl;
+    Oprema o1(40,70);
     //List<Oprema> opreme;
-    Oprema o1(80, 150);
     /*  opreme.add(1, o1);
       opreme.add(2, o2);
       Oprema o;
@@ -89,10 +89,6 @@ int main()
     FitnesOprema f();
     FitnesOprema f1(STRUNJACA, 2, 40, 80,"1.1.2020","1.1.2021",80,150);
     FitnesOprema f2(f1);
-
-    Oprema o();
-    Oprema o3(75,140);
-    Oprema o4(o3);
 
     List<Oprema> opr;
     List<Prostorija> pro;
