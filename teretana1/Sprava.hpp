@@ -5,27 +5,29 @@ enum TIP_SPRAVE { RUKE = 1, GRUDI, NOGE, LEDJA, STOMAK, RAME };
 enum STANJE_SPRAVE { ODLICNO = 1, LOSE, NA_POPRAVCI };
 
 class Sprava : public Oprema{
-protected:
+private:
     TIP_SPRAVE tipSPrave;
     STANJE_SPRAVE stanjeSprave;
     float kvalitetSprava;
+    static int brSprava;
 public:
     Sprava() : Oprema() {
         tipSPrave = RUKE;
         stanjeSprave = ODLICNO;
         kvalitetSprava = 90;
+        brSprava++;
     }
     Sprava(TIP_SPRAVE t, STANJE_SPRAVE s, float k,int kvan,float kval) : Oprema(kvan,kval) {
         tipSPrave = t;
         stanjeSprave = s;
         kvalitetSprava = k;
     }
-    Sprava(const Sprava& s) : Oprema((Oprema)s) {
+    Sprava(const Sprava& s) : Oprema(s.kvalitet,s.kvantitet) {
         tipSPrave = s.tipSPrave;
         stanjeSprave = s.stanjeSprave;
         kvalitetSprava = s.kvalitetSprava;
     }
-    ~Sprava() {}
+    ~Sprava() {brSprava--;}
     TIP_SPRAVE get_tipSprave()const {
         return tipSPrave;
     }

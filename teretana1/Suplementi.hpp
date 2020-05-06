@@ -6,10 +6,12 @@ class Suplementi {
 private:
     int cena;
     VRSTA_SUPLEMENATA suplement;
+    static int brSUplemenata;
 public:
     Suplementi() {
         cena = 150;
         suplement = PROTEIN;
+        brSUplemenata++;
     }
     Suplementi(int c, VRSTA_SUPLEMENATA v) {
         cena = c;
@@ -19,7 +21,7 @@ public:
         cena = s.cena;
         suplement = s.suplement;
     }
-    ~Suplementi() {}
+    ~Suplementi() {brSUplemenata--;}
     int get_cena()const {
         return cena;
     }

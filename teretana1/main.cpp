@@ -559,15 +559,17 @@ public:
     }
 };
 class Sprava : public Oprema{
-protected:
+private:
     TIP_SPRAVE tipSPrave;
     STANJE_SPRAVE stanjeSprave;
     float kvalitetSprava;
+    static int brSprava;
 public:
     Sprava() : Oprema() {
         tipSPrave = RUKE;
         stanjeSprave = ODLICNO;
         kvalitetSprava = 90;
+        brSprava++;
     }
     Sprava(TIP_SPRAVE t, STANJE_SPRAVE s, float k,int kvan,float kval) : Oprema(kvan,kval) {
         tipSPrave = t;
@@ -579,7 +581,7 @@ public:
         stanjeSprave = s.stanjeSprave;
         kvalitetSprava = s.kvalitetSprava;
     }
-    ~Sprava() {}
+    ~Sprava() {brSprava--;}
     TIP_SPRAVE get_tipSprave()const {
         return tipSPrave;
     }
@@ -976,10 +978,12 @@ class Suplementi {
 private:
     int cena;
     VRSTA_SUPLEMENATA suplement;
+    static int brSUplemenata;
 public:
     Suplementi() {
         cena = 150;
         suplement = PROTEIN;
+        brSUplemenata++;
     }
     Suplementi(int c, VRSTA_SUPLEMENATA v) {
         cena = c;
@@ -989,7 +993,7 @@ public:
         cena = s.cena;
         suplement = s.suplement;
     }
-    ~Suplementi() {}
+    ~Suplementi() {brSUplemenata--;}
     int get_cena()const {
         return cena;
     }
@@ -1657,6 +1661,9 @@ public:
     }
 };
 
+
+int Sprava::brSprava = 0;
+int Suplementi::brSUplemenata = 0;
 int main()
 {
     Teretana tr;
