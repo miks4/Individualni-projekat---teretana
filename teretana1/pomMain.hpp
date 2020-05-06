@@ -96,9 +96,18 @@ int main()
     Inventar ii1(10, 400, 400,opr,pro);
     Inventar ii2(ii1);
 
+    List<DinString> ime;
+    ime.add(1,"trenerka");
+    ime.add(2,"olovke");
+    int br[2] = {5,2};
     ReklamniMaterijal rm();
-    ReklamniMaterijal rm1(50, 50, 20, 25, 80);
+    ReklamniMaterijal rm1(ime,br);
     ReklamniMaterijal rm2(rm1);
+    ReklamniMaterijal rrr;
+    rrr.dodajReklamniMaterijal("sorc",9);
+    rrr.dodajReklamniMaterijal("patike",6);
+    rrr.dodajReklamniMaterijal("kacket",3);
+    rrr.vidiStvari();
 
     PlanTreninga pt();
     PlanTreninga pt1(90, 2000, 40, FITNES);
