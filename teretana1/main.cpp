@@ -1657,10 +1657,10 @@ public:
     }
     friend bool operator!=(Teretana& t1, Teretana& t2) {
         if (t1 == t2) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
     friend bool operator<(Teretana& t1, Teretana& t2) {
