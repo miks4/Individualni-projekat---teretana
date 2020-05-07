@@ -32,11 +32,32 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="adresa.hpp" />
+		<Unit filename="clan.hpp" />
+		<Unit filename="clanarina.hpp" />
 		<Unit filename="dinstring.cpp" />
 		<Unit filename="dinstring.hpp" />
+		<Unit filename="fitnesOprema.hpp" />
+		<Unit filename="info.hpp" />
+		<Unit filename="inventar.hpp" />
+		<Unit filename="kasa.hpp" />
+		<Unit filename="kupatilo.hpp" />
 		<Unit filename="list.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="oprema.hpp" />
+		<Unit filename="osoba.hpp" />
+		<Unit filename="ostava.hpp" />
+		<Unit filename="planTreninga.hpp" />
 		<Unit filename="pomMain.hpp" />
+		<Unit filename="prostorija.hpp" />
+		<Unit filename="radnoVreme.hpp" />
+		<Unit filename="reklamniMaterijal.hpp" />
+		<Unit filename="sprava.hpp" />
+		<Unit filename="suplementi.hpp" />
+		<Unit filename="svlacionica.hpp" />
+		<Unit filename="tegovi.hpp" />
+		<Unit filename="teretana.hpp" />
+		<Unit filename="zaposleni.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
