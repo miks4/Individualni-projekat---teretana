@@ -5,12 +5,110 @@
 1588203738 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\dinstring.hpp
 	<iostream>
 
-1588796848 source:c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\main.cpp
+1588851901 source:c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\main.cpp
 	<iostream>
 	"dinstring.hpp"
 	"list.hpp"
+	"teretana.hpp"
 
 1588710203 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\list.hpp
 	<stdlib.h>
 	<iostream>
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\teretana.hpp
+	<iostream>
+	"dinstring.hpp"
+	"info.hpp"
+	"inventar.hpp"
+	"kasa.hpp"
+	"dinstring.hpp"
+	"list.hpp"
+	"zaposleni.hpp"
+	"clan.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\info.hpp
+	<iostream>
+	"radnoVreme.hpp"
+	"adresa.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\radnovreme.hpp
+	<iostream>
+	"dinstring.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\adresa.hpp
+	<iostream>
+	"dinstring.hpp"
+
+1588851963 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\inventar.hpp
+	"list.hpp"
+	"oprema.hpp"
+	"prostorija.hpp"
+	"tegovi.hpp"
+	"sprava.hpp"
+	"fitnesOprema.hpp"
+	"ostava.hpp"
+	"svlacionica.hpp"
+	"kupatilo.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\oprema.hpp
+	<iostream>
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\prostorija.hpp
+	<iostream>
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\tegovi.hpp
+	"oprema.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\sprava.hpp
+	"oprema.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\fitnesoprema.hpp
+	"oprema.hpp"
+	"dinstring.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\ostava.hpp
+	<iostream>
+	"prostorija.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\svlacionica.hpp
+	"prostorija.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\kupatilo.hpp
+	"prostorija.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\kasa.hpp
+	<ostream>
+	"list.hpp"
+	"reklamniMaterijal.hpp"
+	"planTreninga.hpp"
+	"suplementi.hpp"
+	"clanarina.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\reklamnimaterijal.hpp
+	<iostream>
+	"dinstring.hpp"
+	"list.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\plantreninga.hpp
+	<iostream>
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\suplementi.hpp
+	<iostream>
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\clanarina.hpp
+	<iostream>
+	"dinstring.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\zaposleni.hpp
+	"osoba.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\osoba.hpp
+	<iostream>
+	"dinstring.hpp"
+
+1588851901 c:\users\win10\documents\github\individualni-projekat---teretana\teretana1\clan.hpp
+	<iostream>
+	"osoba.hpp"
+	"clanarina.hpp"
+	"list.hpp"
 
